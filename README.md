@@ -3,8 +3,9 @@
 - Research and test out ts/es and scss linting
 - Document how to set up linting and JetBrains configurations
 - Learn and apply typescript and scss
-- Practice vue.js
-- Practice BEM convention
+- Practice vue.js with typescript
+- Practice CSS transitions and CSS units
+- Research and apply standard conventions (BEM, typescript, vue, scss)
 - Create a personal website
 
 JetBrains WebStorm Version: 2019.1
