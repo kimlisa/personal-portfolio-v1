@@ -153,15 +153,15 @@ h2 {
   }
 
   @media #{$mq-header-sm} {
-    font-size: scalable-font-size(2.56rem, 0.5rem, $bp-header-sm, $bp-header-lg);
+    font-size: scalable-font-size(2.56rem, 0.3rem, $bp-header-sm, $bp-header-md);
   }
 
   @media #{$mq-header-md} {
-    font-size: scalable-font-size(2.61rem, 1.1rem, $bp-header-md, $bp-header-lg);
+    font-size: scalable-font-size(2.9rem, 1rem, $bp-header-md, $bp-header-lg);
   }
 
   @media #{$mq-header-lg} {
-    font-size: max-font-size(2.61rem, 1.1rem);
+    font-size: max-font-size(2.9rem, 1rem);
   }
 }
 </style>
