@@ -1,0 +1,11 @@
+@mixin font-primary {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+
+@mixin font-secondary {
+  font-family: Helvetica, sans-serif;
+}
+
+@mixin font-tertiary {
+  font-family: verdana, sans-serif;
+}

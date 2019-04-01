@@ -3,8 +3,9 @@
 - Research and test out ts/es and scss linting
 - Document how to set up linting and JetBrains configurations
 - Learn and apply typescript and scss
-- Practice vue.js with typescript
+- Practice vue class component with typescript
 - Practice CSS transitions and CSS units
+- Practice responsive typography with viewport units
 - Research and apply standard conventions (BEM, typescript, vue, scss)
 - Create a personal website
 

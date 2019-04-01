@@ -6,12 +6,12 @@
     </div>
     <div class="home__title">
       <div class="home__title__left">
-        <p>FIRST</p>
-        <p>Software</p>
+        <h1>LISA</h1>
+        <h2>Software</h2>
       </div>
       <div class="home__title__right">
-        <p>LASTT</p>
-        <p>Engineer</p>
+        <h1><span class="home__title__spacer">&nbsp;</span>KIM</h1>
+        <h2>Engineer</h2>
       </div>
     </div>
   </div>
@@ -27,11 +27,7 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
   },
 })
 export default class Home extends Vue {
-  allowHomeScrolling: boolean = false;
 
-  mounted() {
-    console.log('home:', this.allowHomeScrolling);
-  }
 }
 </script>
 
@@ -49,11 +45,11 @@ export default class Home extends Vue {
 }
 
 .home__bg__left {
-  background: #fff;
+  background: $color-toggle-light-bg;
 }
 
 .home__bg__right {
-  background: #000;
+  background: $color-toggle-dark-bg;
 }
 
 .home__title {
@@ -61,4 +57,45 @@ export default class Home extends Vue {
   align-items: center;
   justify-content: center;
 }
+
+.home__title__spacer {
+  word-spacing: 0.268em;
+}
+
+.home__title__left {
+  width: 100%;
+  text-align: right;
+
+  h1 {
+    padding-right: 0.12em;
+    color: $color-toggle-light-bg-h1;
+  }
+
+  h2 {
+    padding-right: 0.58em;
+    color: $color-toggle-light-bg-h2;
+  }
+}
+
+.home__title__right {
+  width: 100%;
+  text-align: left;
+
+  h1 {
+    padding-left: 0.12em;
+    color: $color-toggle-dark-bg-h1;
+  }
+
+  h2 {
+    padding-left: 0.58em;
+    color: $color-toggle-dark-bg-h2;
+  }
+}
+
+@media (max-width: 320px) {
+  .home__title {
+    justify-content: flex-start;
+  }
+}
+
 </style>

@@ -1,29 +1,33 @@
 <template>
-  <div class="menu">
+  <div class="menu"
+       :class="[
+          $route.name === $_static.HOME ? 'menu--home' : 'menu--subpage',
+          mobileMenu ? 'menu--mobile' : 'menu--desktop'
+       ]"
+  >
     <button
       type="button"
       class="btn btn--menu"
-      v-show="mobileMenu"
-      @click="showMobileNav = !showMobileNav"
+      @click="toggleMobileNav"
     >menu</button>
     <div
       class="menu__nav-wrapper"
-      ref="menuNav"
+      :class="mobileMenu && showMobileNav ? 'no-behind-scroll' : ''"
       v-show="!mobileMenu || mobileMenu && showMobileNav"
     >
-      <nav class="menu__nav">
+      <div class="menu__nav">
         <div class="menu__nav__left">
           <router-link :to="{ name: $_static.HOME }">home</router-link>
-          <router-link :to="{ name: $_static.ABOUT }">about</router-link>
+          <router-link :to="{ name: $_static.PROJECTS }">projects</router-link>
         </div>
         <div class="menu__nav__right">
-          <router-link :to="{ name: $_static.PROJECTS }">projects</router-link>
+          <router-link :to="{ name: $_static.ABOUT }">about</router-link>
           <router-link :to="{ name: $_static.CONTACT }">contact</router-link>
         </div>
         <div class="menu__nav__mobile" v-show="mobileMenu">
           <div
             class="menu__nav__mobile__close-btn"
-            @click="showMobileNav = !showMobileNav"
+            @click="toggleMobileNav"
           ></div>
           <a href="" target="_blank">resume</a>
           <div class="menu__nav__mobile__social">
@@ -35,13 +39,13 @@
             </a>
           </div> <!--  menu__nav__mobile__social -->
         </div> <!-- menu__nav__mobile -->
-      </nav>
+      </div>
     </div> <!-- menu__nav-wrapper -->
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import { IMenuName, MenuName } from '@/consts/consts';
 
 @Component
@@ -53,16 +57,6 @@ export default class Menu extends Vue {
   // reactive data
   showMobileNav: boolean = false;
 
-  // watchers
-  // @Watch('mobileMenu')
-  // onMobile(newValue: string) {
-  //   console.group('watcher mobileMenu');
-  //   console.log('newvalue', newValue);
-  //   console.groupEnd();
-  // }
-
-  // https://github.com/vuejs/vue-class-component#undefined-will-not-be-reactive
-  // 'undefined as any' bypasses type checking
   private $_static: IMenuName = undefined as any; // eslint-disable-line camelcase
 
   // lifecylce hooks
@@ -72,198 +66,227 @@ export default class Menu extends Vue {
   }
 
   // methods
-  // toggleMobileNav() {
-  //   console.log("here", this.showMobileNav)
-  //   this.showMobileNav = !this.showMobileNav;
-  //   console.log("after", this.showMobileNav, this.mobileMenu);
-  //   // const menuNav: HTMLElement = this.$refs.menuNav as HTMLElement;
-  //   // menuNav.style.display = this.isNavOpened ? 'none' : 'block';
-  //   // this.isNavOpened = !this.isNavOpened;
-  // }
+  toggleMobileNav() {
+    this.showMobileNav = !this.showMobileNav;
+
+    const bodyEl: HTMLElement = document.body as HTMLElement;
+    const htmlEl: HTMLElement = document.documentElement as HTMLElement;
+
+    // prevent body scrolling
+    if (this.showMobileNav) {
+      bodyEl.style.overflow = 'hidden';
+      htmlEl.style.overflow = 'hidden';
+      bodyEl.scrollTop = 0;
+      htmlEl.scrollTop = 0;
+    } else {
+      bodyEl.style.overflow = 'auto';
+      htmlEl.style.overflow = 'auto';
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-$sub-menu-width: 10.625em;
-$sub-menu-margin: 1.875em;
-$light-font-color: #fff;
-$dark-font-color: #000;
+$color-mobile-menu-link: #b9b9b9;
 $color-white: #fff;
-$color-menu-link: #b9b9b9;
-$mq-mobile: "(max-width: 37.5em)"; // 0 ~ 600px
-$mq-desktop: "(min-width: 37.563em)"; // 601px ~ inf
+
+/* for mobile menu, refers to the close 'x' btn */
+%shared-x-btn {
+  position: relative;
+  top: 0.449rem;
+  display: block;
+  width: 2.5rem;
+  height: 0.25rem;
+  content: '';
+  background: #626262;
+  border-radius: 0.125rem;
+  transition: 0.5s;
+
+  &:hover {
+    background: white;
+  }
+}
+
+@mixin menu-nav-box($align, $color, $height:null) {
+  $sub-menu-margin: 1.875em;
+
+  width: 11em;
+  text-align: $align;
+
+  @if $align == 'left' { margin-left: $sub-menu-margin; }
+
+  @else { margin-right: $sub-menu-margin; }
+
+  a {
+    @if $align == 'left' { margin-right: $sub-menu-margin; }
+
+    @else { margin-left: $sub-menu-margin; }
+
+    color: $color;
+
+    &::after {
+      @if $height { height: $height; }
+
+      background-color: $color;
+    }
+  }
+}
 
 .router-link-exact-active {
   font-weight: bold;
-
-  @media #{$mq-mobile} {
-    color: $color-white !important;
-
-    &::before {
-      position: relative;
-      top: 0.031rem;
-      display: inline-block;
-      width: 0;
-      margin: 0 0.625rem 0 -1.25rem;
-      content: '';
-      border-top: 0.625rem solid transparent;
-      border-bottom: 0.625rem solid transparent;
-      border-left: 0.625rem solid $color-white;
-      border-radius: 0.188rem;
-    }
-  }
 }
 
-.menu__nav {
+.no-behind-scroll {
+  overflow: hidden;
+}
+
+/*
+* Desktop styling
+*/
+.menu--desktop.menu--subpage {
+  /* margin-bottom: 2.8em; */
+  padding: 1.25rem;
+}
+
+.menu--desktop .btn--menu {
+  display: none;
+}
+
+.menu--desktop .menu__nav {
   display: flex;
   justify-content: center;
 
-  @media #{$mq-mobile} {
-    display: block;
-    width: 100%;
-    max-width: 155px;
-    padding-left: 45px;
-    margin-top: 20px;
-    border-left: 1px solid #4e4e4e;
+  @media #{$mq-desktop-nav} {
+    font-size: scalable-font-size(1rem, 0.2rem, $bp-menu-nav, $bp-header-lg);
+  }
 
-    a {
-      display: inline-block;
-    }
+  @media #{$mq-header-lg} {
+    font-size: max-font-size(1rem, 0.2rem);
   }
 }
 
-@media #{$mq-desktop} {
-  .menu__nav__left {
-    width: $sub-menu-width;
-    margin-right: $sub-menu-margin;
-    text-align: right;
-
-    a {
-      margin-left: $sub-menu-margin;
-      color: $dark-font-color;
-
-      &::after {
-        background-color: $dark-font-color;
-      }
-    }
-  }
-
-  .menu__nav__right {
-    width: $sub-menu-width;
-    margin-left: $sub-menu-margin;
-    text-align: left;
-
-    a {
-      margin-right: $sub-menu-margin;
-      color: $light-font-color;
-
-      &::after {
-        /* light on dark heights appear thicker = reduce size */
-        height: 0.156rem;
-        background-color: $light-font-color;
-      }
-    }
-  }
+.menu--desktop .menu__nav__left {
+  @include menu-nav-box(right, $color-toggle-light-bg-link);
 }
 
-@media #{$mq-mobile} {
-  /* for mobile menu, refers to the close 'x' btn */
-  %shared-x-btn {
+.menu--desktop .menu__nav__right {
+  @include menu-nav-box(left, $color-toggle-dark-bg-link, 0.15rem);
+}
+
+/*
+* Mobile styling
+*/
+.menu--mobile .router-link-exact-active {
+  color: $color-white !important;
+
+  &::before {
     position: relative;
-    top: 0.449rem;
-    display: block;
-    width: 2.5rem;
-    height: 0.25rem;
+    top: 0.031rem;
+    display: inline-block;
+    width: 0;
+    margin: 0 0.625rem 0 -1.25rem;
     content: '';
-    background: #626262;
-    border-radius: 0.125rem;
-    transition: 0.5s;
-
-    &:hover {
-      background: white;
-    }
+    border-top: 0.625rem solid transparent;
+    border-bottom: 0.625rem solid transparent;
+    border-left: 0.625rem solid $color-white;
+    border-radius: 0.188rem;
   }
+}
 
-  .menu__nav-wrapper {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    padding: 3.75rem 1.875rem;
-    overflow: auto;
-    text-align: left;
-    background: #333;
+.menu--mobile .btn--menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  display: block;
+  margin: 1.563rem 1.563rem 0 auto;
+  font-size: 1.1rem;
+  color: $color-white;
+  background: #6e6e6e;
+  border-color: #696969;
 
-    a {
-      display: inline-block;
-      padding: 0.625rem 0;
-      font-size: 1.625rem;
-      color: $color-menu-link;
-      text-transform: uppercase;
-
-      &::after {
-        background-color: $color-white;
-      }
-    }
-  }
-
-  .btn--menu {
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 1.563rem 1.563rem 0 auto;
-    color: $color-white;
-    background: #6e6e6e;
-    border-color: #696969;
-  }
-
-  .btn--menu:hover {
+  &:hover {
     background: #42b983;
   }
+}
 
-  .menu__nav__mobile {
-    padding-top: 1.25rem
-  }
+.menu--mobile .menu__nav-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  text-align: left;
+  background: #333;
 
-  .menu__nav__mobile__social {
-    display: flex;
+  a {
+    display: inline-block;
+    padding: 0.625rem 0;
+    font-size: 1.625rem;
+    color: $color-mobile-menu-link;
+    text-transform: uppercase;
 
-    a {
-      padding-top: 0.813rem;
-      padding-right: 1.375rem;
-      padding-bottom: 0.313rem;
-      font-size: 2.6rem;
-      line-height: 0;
-
-      &::after {
-        margin-top: 0.375rem;
-      }
+    &::after {
+      background-color: $color-white;
     }
   }
+}
 
-  .menu__nav__mobile__close-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 2.063rem;
-    padding-top: 0.375rem;
-    margin: 1.75rem 1.875rem 0 0;
-    cursor: pointer;
+.menu--mobile .menu__nav {
+  display: block;
+  width: 100%;
+  max-width: 9.688rem;
+  padding-left: 2.813rem;
+  margin: 5rem 1.875rem 3.75rem 1.875rem;
+  border-left: 1px solid #4e4e4e;
+
+  a {
+    display: inline-block;
   }
+}
 
-  .menu__nav__mobile__close-btn::before {
-    @extend %shared-x-btn;
+.menu--mobile .menu__nav__mobile {
+  padding-top: 1.25rem;
+}
 
-    top: 0.71em;
-    transform: rotate(45deg);
+.menu--mobile .menu__nav__mobile__social {
+  display: flex;
+
+  a {
+    padding: 0.813rem 1.375rem 0.313rem 0;
+    font-size: 2.6rem;
+    line-height: 0;
+
+    &::after {
+      margin-top: 0.375rem;
+    }
   }
+}
 
-  .menu__nav__mobile__close-btn::after {
-    @extend %shared-x-btn;
+.menu--mobile .menu__nav__mobile__close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2.063rem;
+  padding-top: 0.375rem;
+  margin: 1.75rem 1.875rem 0 0;
+  cursor: pointer;
+}
 
-    transform: rotate(-45deg);
-  }
+.menu--mobile .menu__nav__mobile__close-btn::before {
+  @extend %shared-x-btn;
+
+  top: 0.71em;
+  transform: rotate(45deg);
+}
+
+.menu--mobile .menu__nav__mobile__close-btn::after {
+  @extend %shared-x-btn;
+
+  transform: rotate(-45deg);
 }
 </style>

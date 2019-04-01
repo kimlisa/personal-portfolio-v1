@@ -1,0 +1,14 @@
+// breakpoints
+$bp-header-esm: 29.438em; // 471px ~
+$bp-header-sm: 33.75em; // 540 px ~
+$bp-header-md: 80.063em; // 1040px ~
+$bp-header-lg: 120em; // 1920px ~
+$bp-menu-nav: 37.5em; // 600px
+
+// media queries
+$mq-header-esm: "(min-width: #{$bp-header-esm})";
+$mq-header-sm: "(min-width: #{$bp-header-sm})";
+$mq-header-md: "(min-width: #{$bp-header-md})";
+$mq-header-lg: "(min-width: #{$bp-header-lg})";
+$mq-mobile-nav: "(max-width: #{$bp-menu-nav})";
+$mq-desktop-nav: "(min-width: #{$bp-menu-nav})";

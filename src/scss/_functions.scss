@@ -1,0 +1,34 @@
+// Remove the unit of a length
+// @param {number} $number - number to remove unit from
+// @return {number} - the unitless number
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    // to remove unit of value, divide by it by 1 unit
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+// Calculates font-size in viewport, assumes rem base/scalar, em min/max mq
+// @param {number} $base-font-size - smallest font size
+// @param {number} $scalar-font-size - how much to scale from $base-font-size
+// @param {number} $min-mq - smallest media query width
+// @param {number} $max-mq - largest media query width
+// @return {number} - returns the calculated font-size in viewport
+@function scalable-font-size($base-font-size, $scalar-font-size, $min-mq, $max-mq) {
+  $base: strip-unit($base-font-size);
+  $scalar: strip-unit($scalar-font-size);
+  $max-w: strip-unit($max-mq);
+  $min-w: strip-unit($min-mq);
+
+  @return calc(#{$base}rem + #{$scalar} * (100vw - #{$min-w}rem) / (#{$max-w} - #{$min-w}));
+}
+
+// Provides shorthand of calculating max font-size
+// @param {number} $base-font-size - smallest font size
+// @param {number} $scalar-font-size - how much to scale from $base-font-size
+// @return {number} calculated font-size
+@function max-font-size($base-font-size, $scalar-font-size) {
+  @return calc(#{$base-font-size} + #{$scalar-font-size});
+}
