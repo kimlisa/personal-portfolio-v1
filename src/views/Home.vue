@@ -1,9 +1,5 @@
 <template>
   <div class="home">
-    <div class="home__bg">
-      <div class="home__bg__left"></div>
-      <div class="home__bg__right"></div>
-    </div>
     <div class="home__title">
       <div class="home__title__left">
         <h1>LISA</h1>
@@ -14,44 +10,37 @@
         <h2>Engineer</h2>
       </div>
     </div>
+    <HoverPopover
+      :content="'Toggles sub-pages bg-color'"
+      class="color-toggler"
+    >
+      <BtnColorToggler
+        :smallBtn="false"
+        :toggleState="colorToggled"
+        @color-toggled="$emit('color-toggled', $event)"/>
+    </HoverPopover>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import HoverPopover from '@/components/HoverPopover.vue';
+import BtnColorToggler from '@/components/BtnColorToggler.vue';
 
 @Component({
   components: {
-    HelloWorld,
+    HoverPopover,
+    BtnColorToggler,
   },
 })
 export default class Home extends Vue {
+  @Prop(Boolean) readonly colorToggled!: boolean;
 
 }
 </script>
 
 <style lang="scss" scoped>
-.home__bg {
-  position: fixed;
-  top: 0;
-  z-index: -1;
-  display: flex;
-
-  div {
-    width: 50vw;
-    height: 100vh;
-  }
-}
-
-.home__bg__left {
-  background: $color-toggle-light-bg;
-}
-
-.home__bg__right {
-  background: $color-toggle-dark-bg;
-}
-
 .home__title {
   display: flex;
   align-items: center;
@@ -60,6 +49,48 @@ export default class Home extends Vue {
 
 .home__title__spacer {
   word-spacing: 0.268em;
+}
+
+.color-toggler {
+  margin-top: 2rem;
+}
+
+h1 {
+  letter-spacing: 0.15em;
+
+  @media #{$mq-header-esm} {
+    font-size: scalable-font-size(3.3rem, 1.5rem, $bp-header-esm, $bp-header-sm);
+  }
+
+  @media #{$mq-header-sm} {
+    font-size: scalable-font-size(4.8rem, 0.75rem, $bp-header-sm, $bp-header-md);
+  }
+
+  @media #{$mq-header-md} {
+    font-size: scalable-font-size(6rem, 1.2rem, $bp-header-md, $bp-header-lg);
+  }
+
+  @media #{$mq-header-lg} {
+    font-size: max-font-size(6rem, 1.2rem);
+  }
+}
+
+h2 {
+  @media #{$mq-header-esm} {
+    font-size: scalable-font-size(1.86rem, 0.7rem, $bp-header-esm, $bp-header-sm);
+  }
+
+  @media #{$mq-header-sm} {
+    font-size: scalable-font-size(2.56rem, 0.3rem, $bp-header-sm, $bp-header-md);
+  }
+
+  @media #{$mq-header-md} {
+    font-size: scalable-font-size(2.9rem, 1rem, $bp-header-md, $bp-header-lg);
+  }
+
+  @media #{$mq-header-lg} {
+    font-size: max-font-size(2.9rem, 1rem);
+  }
 }
 
 .home__title__left {

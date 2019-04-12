@@ -10,5 +10,8 @@ $mq-header-esm: "(min-width: #{$bp-header-esm})";
 $mq-header-sm: "(min-width: #{$bp-header-sm})";
 $mq-header-md: "(min-width: #{$bp-header-md})";
 $mq-header-lg: "(min-width: #{$bp-header-lg})";
+
 $mq-mobile-nav: "(max-width: #{$bp-menu-nav})";
 $mq-desktop-nav: "(min-width: #{$bp-menu-nav})";
+
+$mq-browser-height: "(max-height: 29.438em)"; // 0 ~ 380px

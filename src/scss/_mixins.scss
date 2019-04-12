@@ -1,0 +1,13 @@
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin subpage-section-wrapper {
+  width: 100%;
+  max-width: 56.25em;
+  padding: 6.2em 0;
+  margin: 0 auto;
+  text-align: left;
+}

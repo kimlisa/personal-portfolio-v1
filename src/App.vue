@@ -1,22 +1,54 @@
 <template>
-  <div id="app" ref="app">
+  <div
+    id="app"
+    :class="[
+      $route.name === $_static.HOME ? 'app--home' : 'app--subpage',
+      colorToggled ? 'app--dark' : 'app--light',
+      mobileMenu ? 'app--mobile' : 'app-desktop'
+    ]"
+  >
+    <aside
+      class="app__sidebar"
+      :class="hideSidebar ? 'app__sidebar--hide' : 'app__sidebar--show'"
+      v-show="$route.name !== $_static.HOME"
+    >
+      <a href="https://github.com/kimlisa" target="_blank">
+        <font-awesome-icon :icon="['fab', 'github']" />
+      </a>
+      <a href="https://www.linkedin.com/in/kim-lisa/" target="_blank">
+        <font-awesome-icon :icon="['fab', 'linkedin-in']" />
+      </a>
+      <a>
+        <font-awesome-icon icon="file-word"/>
+      </a>
+      <BtnColorToggler
+        :smallBtn="true"
+        :toggleState="colorToggled"
+        @color-toggled="colorToggled = $event"
+      />
+    </aside>
     <nav class="app__nav">
-      <Menu :mobileMenu="mobileMenu"/>
+      <Menu
+        :mobileMenu="mobileMenu"
+        :colorToggled="colorToggled"
+      />
     </nav>
     <main class="app__content">
-      <router-view/>
+      <keep-alive>
+        <router-view
+          @color-toggled="colorToggled = $event"
+          :colorToggled="colorToggled"
+        />
+      </keep-alive>
     </main>
-    <footer v-if="$route.name !== $_static.HOME" class="app__footer">
+    <footer v-show="$route.name !== $_static.HOME" class="app__footer">
       <p>Designed and Built by Lisa Kim, 2019</p>
     </footer>
-    <div v-else>
-      <BtnColorToggler />
-    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { IMenuName, MenuName } from '@/consts/consts';
 import Menu from '@/components/Menu.vue';
 import BtnColorToggler from '@/components/BtnColorToggler.vue';
@@ -27,64 +59,131 @@ import BtnColorToggler from '@/components/BtnColorToggler.vue';
     BtnColorToggler,
   },
 })
-
 export default class App extends Vue {
   mobileMenu: boolean = false;
+
+  colorToggled: boolean = false;
+
+  hideSidebar: boolean = true;
 
   // https://github.com/vuejs/vue-class-component#undefined-will-not-be-reactive
   // 'undefined as any' bypasses type checking
   private $_static: IMenuName = undefined as any; // eslint-disable-line camelcase
 
+  private $_scrolling: boolean = undefined as any; // eslint-disable-line camelcase
+
+  @Watch('colorToggled')
+  onBtnToggled() {
+    window.localStorage.colorToggled = this.colorToggled;
+    this.toggleBodyBg();
+  }
+
   created() {
     this.$_static = MenuName;
 
+    // load users bg color preference if any
+    const userPreference: Storage = window.localStorage;
+    const colorPreference: string = userPreference.colorToggled;
+    if (colorPreference != null && (colorPreference === 'true' || colorPreference === 'false')) {
+      this.colorToggled = colorPreference === 'true';
+    }
+
     window.addEventListener('resize', this.checkViewportSize);
+    window.addEventListener('scroll', this.sidebarToggler);
 
     this.checkViewportSize();
-    console.log('app');
+    console.log('app', window.localStorage);
   }
 
   beforeDestroy() {
     window.removeEventListener('resize', this.checkViewportSize);
+    window.removeEventListener('scroll', this.sidebarToggler);
+  }
+
+  toggleBodyBg() {
+    document.body.style.backgroundColor = this.colorToggled ? '#000' : '#fff';
   }
 
   checkViewportSize() {
-    const width: number = window.innerWidth;
+    // const width: number = window.innerWidth;
     this.mobileMenu = window.matchMedia('(max-width: 37.5em)').matches;
 
-    if (window.matchMedia('(max-width: 37.5em)').matches) {
-      console.log('mq matched: ', width);
+    // if (window.matchMedia('(max-width: 37.5em)').matches) {
+    //   console.log('mq matched: ', width);
+    // } else {
+    //   console.log('mq NOT matched: ', width);
+    // }
+  }
+
+  sidebarToggler() {
+    if (this.mobileMenu || this.$route.name === this.$_static.HOME || this.$_scrolling) return;
+
+    this.$_scrolling = true;
+
+    const currentScrollPosition = window.scrollY;
+
+    if (currentScrollPosition <= 0) {
+      if (!this.hideSidebar) {
+        this.hideSidebar = true;
+      }
     } else {
-      console.log('mq NOT matched: ', width);
+      this.hideSidebar = false;
     }
+
+    this.$_scrolling = false;
   }
 }
 </script>
 
 <style lang="scss">
+@import 'scss/light-theme';
+@import 'scss/dark-theme';
+
+%shared-home-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  display: block;
+  width: 50%;
+  content: '';
+}
+
 html {
   @include font-primary;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+
+  /* supposedly a trick to make browser accelerate graphics
+   * fixes, some texts appearing blurry in safari
+   */
+
+  /* -webkit-transform: translate3d(0, 0, 1px);
+  -moz-transform: translate3d(0, 0, 1px);
+  -ms-transform: translate3d(0, 0, 1px);
+  -o-transform: translate3d(0, 0, 1px);
+  transform: translate3d(0, 0, 1px); */
+
+  /* Enable hardware acceleration to fix laggy transitions */
+
+  /* transform: translateZ(0); */
 }
 
 body {
+  width: 100%;
   padding: 0;
   margin: 0;
+  color: #2c3e50;
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100vh;
-  color: #2c3e50;
-  text-align: center;
+.body--dark {
+  background-color: $color-toggle-dark-bg;
+}
 
-  @media (max-height: 23.75em) {  // 0 ~ 380px
-    padding: 60px 0;
-  }
+.body--light {
+  background-color: $color-toggle-light-bg;
 }
 
 button {
@@ -95,22 +194,18 @@ button {
   border-width: 1px;
   border-radius: 0.25rem;
   box-shadow: 0 0.188rem 0.313rem 0.063rem rgba(0, 0, 0, 0.22);
+
+  &:hover {
+    transition: 0.15s ease-in;
+  }
 }
 
 a {
   display: inline-block;
   text-decoration: none;
 
-  &::after {
-    display: block;
-    width: 0;
-    height: 0.188rem;
-    content: '';
-    transition: 0.25s cubic-bezier(0.7, 0.05, 0.4, 1);
-  }
+  &.a--btn {
 
-  &:hover::after {
-    width: 100%;
   }
 }
 
@@ -122,23 +217,6 @@ h1 {
   font-size: 3.3rem;
   font-weight: normal;
   line-height: 1em;
-  letter-spacing: 0.15em;
-
-  @media #{$mq-header-esm} {
-    font-size: scalable-font-size(3.3rem, 1.5rem, $bp-header-esm, $bp-header-sm);
-  }
-
-  @media #{$mq-header-sm} {
-    font-size: scalable-font-size(4.8rem, 0.75rem, $bp-header-sm, $bp-header-md);
-  }
-
-  @media #{$mq-header-md} {
-    font-size: scalable-font-size(6rem, 1.2rem, $bp-header-md, $bp-header-lg);
-  }
-
-  @media #{$mq-header-lg} {
-    font-size: max-font-size(6rem, 1.2rem);
-  }
 }
 
 h2 {
@@ -147,21 +225,193 @@ h2 {
   margin: 0.4em 0 0 0;
   font-size: 1.86rem;
   font-weight: normal;
+}
 
-  @media #{$mq-header-esm} {
-    font-size: scalable-font-size(1.86rem, 0.7rem, $bp-header-esm, $bp-header-sm);
+h3 {
+  margin-top: 0;
+  font-size: 3.2em;
+  font-weight: normal;
+  letter-spacing: 0.03em;
+
+  @include font-secondary;
+}
+
+h4 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 2em;
+}
+
+h5 {
+  margin-top: 0;
+  font-size: 1.1em;
+  color: #979797;
+}
+
+h6 {
+  margin-bottom: 0.2em;
+  font-size: 0.9em;
+  color: $color-h4;
+}
+
+p {
+  @include font-secondary;
+
+  line-height: 1.74em;
+
+  &.p--first {
+    margin-top: 0;
+  }
+}
+
+img {
+  border-radius: 0.4em;
+}
+
+ul {
+  @include font-secondary;
+
+  padding-left: 1em;
+  margin-left: 0.1em;
+  font-size: 17px;
+  font-weight: normal;
+  list-style-type: none;
+
+  li::before {
+    position: relative;
+    display: inline-block;
+    margin: 0 0.625rem 0 -1.25rem;
+    font-size: 1.2em;
+    content: '▹';
   }
 
-  @media #{$mq-header-sm} {
-    font-size: scalable-font-size(2.56rem, 0.3rem, $bp-header-sm, $bp-header-md);
+  &.ul--grid {
+    display: grid;
+  }
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  /* & * {
+    transition: $transition-bg-toggle;
+  } */
+}
+
+.app__sidebar {
+  position: fixed;
+  bottom: 0;
+  left: 3%;
+  z-index: 1;
+
+  a {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #b4b4b4;
   }
 
-  @media #{$mq-header-md} {
-    font-size: scalable-font-size(2.9rem, 1rem, $bp-header-md, $bp-header-lg);
+  &::after {
+    display: block;
+    width: 1px;
+    height: 2rem;
+    margin: auto auto 1.3rem auto;
+    content: '';
+    background: #d9d9d9;
   }
 
-  @media #{$mq-header-lg} {
-    font-size: max-font-size(2.9rem, 1rem);
+  &--hide {
+    bottom: -16rem;
   }
+
+  &--show {
+    bottom: 0;
+  }
+}
+
+.app-desktop.app--subpage {
+  /* transition: 1s ease; */
+
+  .app__nav {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin-top: 2em;
+  }
+}
+
+.app--home {
+  height: 100vh;
+  overflow-x: scroll;
+
+  @media #{$mq-browser-height} {
+    height: 100%;
+    padding: 3.75em 0;
+  }
+
+  &::before {
+    @extend %shared-home-bg;
+
+    left: 0;
+    background-color: $color-toggle-light-bg;
+  }
+
+  &::after {
+    @extend %shared-home-bg;
+
+    right: 0;
+    background-color: $color-toggle-dark-bg;
+  }
+}
+
+.app--subpage {
+  $app--subpage: &;
+
+  position: relative;
+  transition: $transition-bg-toggle;
+
+  .app__content {
+    padding: 0 5.5em;
+  }
+
+  &.app--dark .app__content {
+    @include dark-theme;
+  }
+
+  &.app--light .app__content {
+    @include light-theme;
+  }
+}
+
+footer p {
+  margin: 6em 0 2em 0;
+  font-size: 0.813rem;
+  font-weight: 400;
+  color: #919191;
+}
+
+.btn--big {
+  padding: 1.1em 1.2em;
+  background-color: transparent;
+  box-shadow: none;
+  transition: 0.15s ease-out;
+}
+
+.fade-out-enter-active,
+.fade-out-leave-active {
+  transition-duration: 0.25s;
+  transition-property: opacity;
+}
+
+.fade-out-enter-active {
+  transition-delay: 0.25s;
+}
+
+.fade-out-enter,
+.fade-out-leave-active {
+  opacity: 0;
 }
 </style>

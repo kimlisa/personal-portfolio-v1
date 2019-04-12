@@ -1,0 +1,71 @@
+@mixin dark-theme {
+  font-size: 1.063em;
+  font-weight: 400;
+  color: #ccc;
+
+  a {
+    color: #00b77f;
+  }
+
+  h1 {
+    color: $color-toggle-dark-bg-h1;
+  }
+
+  h2 {
+    color: $color-toggle-dark-bg-h2;
+  }
+
+  h3 {
+    color: #fff;
+  }
+
+  h4 {
+    color: $color-h4;
+  }
+
+  li::before {
+    color: #45c0a3;
+  }
+
+  .btn--big,
+  .btn-contact-form {
+    color: $color-h4;
+    border-color: $color-h4;
+
+    &:hover {
+      color: #33e0b8;
+      background-color: rgba(78, 220, 188, 0.13);
+    }
+  }
+
+  .project-others__card {
+    background-color: rgba(34, 34, 34, 0.9);
+
+    li {
+      color: #43b99c;
+    }
+
+    h5 {
+      color: #585858;
+    }
+  }
+
+  .contact {
+    input,
+    textarea {
+      color: #9f9f9f;
+    }
+
+    svg {
+      color: $color-h4;
+    }
+
+    .contact-form div {
+      border-color: $color-h4;
+    }
+
+    .contact--social-icons svg {
+      color: inherit;
+    }
+  }
+}

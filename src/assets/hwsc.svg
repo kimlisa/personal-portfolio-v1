@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <clipPath id="clip-Advanced_Search_1">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="Advanced_Search_1" data-name="Advanced Search – 1" clip-path="url(#clip-Advanced_Search_1)">
+    <rect width="1920" height="1080" fill="#fff"/>
+    <path id="search-solid" d="M131.252,115.06,105.34,89.147a6.233,6.233,0,0,0-4.418-1.819H96.685a54.036,54.036,0,1,0-9.357,9.357v4.236a6.233,6.233,0,0,0,1.819,4.418l25.913,25.913a6.212,6.212,0,0,0,8.811,0l7.355-7.355A6.267,6.267,0,0,0,131.252,115.06ZM54.06,87.328A33.268,33.268,0,1,1,87.328,54.06,33.249,33.249,0,0,1,54.06,87.328Z" transform="translate(871 550)" fill="#f7f7f7"/>
+    <text id="Select_a_Filter_to_get_started" data-name="Select a Filter to get started" transform="translate(960 738)" fill="#ccc" font-size="56" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="-371.224" y="0">Select a Filter to get started</tspan></text>
+    <g id="Rectangle_16" data-name="Rectangle 16" transform="translate(203 343)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="417" height="81" rx="15" stroke="none"/>
+      <rect x="0.5" y="0.5" width="416" height="80" rx="14.5" fill="none"/>
+    </g>
+    <text id="Select_a_Filter" data-name="Select a Filter" transform="translate(325.416 395)" fill="#585858" font-size="30" font-family="HelveticaNeue, Helvetica Neue"><tspan x="-91.38" y="0">Select a Filter</tspan></text>
+    <path id="caret-down-solid" d="M12.976,192H34.6a1.678,1.678,0,0,1,1.185,2.866L24.978,205.682a1.684,1.684,0,0,1-2.378,0L11.791,194.866A1.678,1.678,0,0,1,12.976,192Z" transform="translate(554.705 184)" fill="#585858"/>
+    <text id="Advanced_Search" data-name="Advanced Search" transform="translate(480 294)" fill="#707070" font-size="70" font-family="HelveticaNeue, Helvetica Neue"><tspan x="-276.815" y="0">Advanced Search</tspan></text>
+    <text id="HWSC" transform="translate(203 217)" fill="#b9c7d8" font-size="46" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="0" y="0">HWSC</tspan></text>
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="273" height="81.173" rx="40.587" transform="translate(665 343)" fill="#2e385a"/>
+    <text id="Begin_Search" data-name="Begin Search" transform="translate(806 395)" fill="#fff" font-size="30" font-family="HelveticaNeue, Helvetica Neue"><tspan x="-89.73" y="0">Begin Search</tspan></text>
+    <text id="HWSC_About" data-name="HWSC     About" transform="translate(57 72)" fill="#8889a2" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0" xml:space="preserve">HWSC     About</tspan></text>
+    <text id="Log_in" data-name="Log in" transform="translate(1646 72)" fill="#8889a2" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">Log in</tspan></text>
+    <text id="_Sign_up" data-name=" Sign up" transform="translate(1757 72)" fill="#3a3c74" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0"> </tspan><tspan y="0" fill="#4a4b69">Sign up</tspan></text>
+  </g>
+</svg>

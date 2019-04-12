@@ -1,0 +1,86 @@
+@mixin light-theme {
+  font-size: 1.063em;
+  font-weight: 300;
+  color: #000;
+
+  a {
+    /*color: #00b77f;*/
+    color: #008d83;
+
+    svg {
+      color: #808080;
+    }
+  }
+
+  h1 {
+    color: $color-toggle-light-bg-h1;
+  }
+
+  h2 {
+    color: $color-toggle-light-bg-h2;
+  }
+
+  h3 {
+    color: #111;
+  }
+
+  h4 {
+    color: #0f9d7b;
+  }
+
+  h6 {
+    color: #0f9d7b;
+  }
+
+  li::before {
+    color: #0f9d7b;
+  }
+
+  .btn--big,
+  .btn-contact-form {
+    color: #0f9d7b;
+    border-color: #0f9d7b;
+
+    &:hover {
+      color: #1e8068;
+      background-color: rgba(13, 138, 108, 0.04);
+    }
+  }
+
+  .projects {
+    svg {
+      color: #008d83;
+    }
+  }
+
+  .project-others__card {
+    background-color: #fafafa;
+
+    li {
+      color: #06976f;
+    }
+
+    h5 {
+      color: #494949;
+    }
+  }
+
+  .contact {
+    input,
+    textarea {
+      color: #131313;
+    }
+
+    svg {
+      color: #0f9d7b;
+    }
+
+    .contact-form div {
+      border-color: #0f9d7b;
+    }
+
+    .contact--social-icons svg {
+      color: inherit;
+    }
+  }
+}

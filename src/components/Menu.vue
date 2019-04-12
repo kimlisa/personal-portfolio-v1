@@ -1,9 +1,15 @@
 <template>
-  <div class="menu"
-       :class="[
-          $route.name === $_static.HOME ? 'menu--home' : 'menu--subpage',
-          mobileMenu ? 'menu--mobile' : 'menu--desktop'
-       ]"
+  <div
+    class="menu"
+    ref="menu"
+    :class="[
+      $route.name === $_static.HOME ? 'menu--home' : 'menu--subpage',
+      mobileMenu ? 'menu--mobile' : 'menu--desktop',
+      colorToggled ? 'menu--dark' : 'menu--light',
+      colorToggled && scrolled ? 'menu--dark-scroll' : '',
+      !colorToggled && scrolled ? 'menu--light-scroll' : '',
+      hideMenu ? 'menu--hide' : 'menu--show',
+    ]"
   >
     <button
       type="button"
@@ -15,7 +21,7 @@
       :class="mobileMenu && showMobileNav ? 'no-behind-scroll' : ''"
       v-show="!mobileMenu || mobileMenu && showMobileNav"
     >
-      <div class="menu__nav">
+      <div class="menu__nav" @click="closeMenu">
         <div class="menu__nav__left">
           <router-link :to="{ name: $_static.HOME }">home</router-link>
           <router-link :to="{ name: $_static.PROJECTS }">projects</router-link>
@@ -24,6 +30,7 @@
           <router-link :to="{ name: $_static.ABOUT }">about</router-link>
           <router-link :to="{ name: $_static.CONTACT }">contact</router-link>
         </div>
+        <!-- Mobile Menu Only Extra Links -->
         <div class="menu__nav__mobile" v-show="mobileMenu">
           <div
             class="menu__nav__mobile__close-btn"
@@ -45,24 +52,62 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { IMenuName, MenuName } from '@/consts/consts';
 
 @Component
 export default class Menu extends Vue {
   // props
-  // ! telling typescript we are certain mobileMenu is a non-null value
-  @Prop(Boolean) readonly mobileMenu!: boolean;
+  @Prop(Boolean) readonly mobileMenu!: boolean; // ! tells TS, mobileMenu is a non-null value
+
+  @Prop(Boolean) readonly colorToggled!: boolean;
 
   // reactive data
   showMobileNav: boolean = false;
 
+  scrolled: boolean = false;
+
+  hideMenu: boolean = false;
+
+  // static data
   private $_static: IMenuName = undefined as any; // eslint-disable-line camelcase
 
-  // lifecylce hooks
+  private $_previousScrollPosition: number = undefined as any; // eslint-disable-line camelcase
+
+  private $_scrolling: boolean = undefined as any; // eslint-disable-line camelcase
+
+  private $_showNav: boolean = undefined as any; // eslint-disable-line camelcase
+
+  private $_showBoxShadow: boolean = undefined as any; // eslint-disable-line camelcase
+
+  private $_menuElement: HTMLElement = undefined as any; // eslint-disable-line camelcase
+
+  private $_scrollHeight: number = undefined as any; // eslint-disable-line camelcase
+
+  @Watch('$route')
+  onRouteChange() {
+    if (this.$route.name !== this.$_static.HOME) return;
+
+    this.scrolled = false;
+  }
+
   created() {
     this.$_static = MenuName;
-    console.log('menu', this.mobileMenu);
+    this.$_previousScrollPosition = 0;
+    this.$_scrolling = false;
+    this.$_showNav = true;
+    this.$_showBoxShadow = false;
+    this.$_scrollHeight = 34;
+
+    window.addEventListener('scroll', this.menuScrollListener);
+  }
+
+  mounted() {
+    this.$_menuElement = this.$refs.menu as HTMLElement;
+  }
+
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.menuScrollListener);
   }
 
   // methods
@@ -81,6 +126,57 @@ export default class Menu extends Vue {
     } else {
       bodyEl.style.overflow = 'auto';
       htmlEl.style.overflow = 'auto';
+    }
+  }
+
+  closeMenu(evt: Event) {
+    if (!this.mobileMenu) {
+      return;
+    }
+
+    const target: HTMLElement = evt.target as HTMLElement;
+    const tag: string = target.tagName.toLowerCase();
+
+    if (tag === 'a' || tag === 'svg' || tag === 'path') {
+      this.toggleMobileNav();
+    }
+  }
+
+  menuScrollListener() {
+    if (this.mobileMenu || this.$route.name === this.$_static.HOME || this.$_scrolling) return;
+
+    this.$_scrolling = true;
+
+    const currentScrollPosition = window.scrollY;
+
+    this.toggleDesktopNav(currentScrollPosition);
+
+    this.$_previousScrollPosition = currentScrollPosition;
+    this.$_scrolling = false;
+  }
+
+  toggleDesktopNav(currentScrollPosition: number) {
+    if (currentScrollPosition <= 0) {
+      if (this.$_showBoxShadow) {
+        this.$_showBoxShadow = false;
+        this.scrolled = false;
+        // this.hideMenu = false;
+        // this.$_showNav = true;
+      }
+      return;
+    }
+
+    if (currentScrollPosition > this.$_scrollHeight && !this.$_showBoxShadow) {
+      this.$_showBoxShadow = true;
+      this.scrolled = true;
+    }
+
+    if (currentScrollPosition > this.$_previousScrollPosition && this.$_showNav) {
+      this.$_showNav = false;
+      this.hideMenu = true;
+    } else if (currentScrollPosition < this.$_previousScrollPosition && !this.$_showNav) {
+      this.$_showNav = true;
+      this.hideMenu = false;
     }
   }
 }
@@ -107,6 +203,7 @@ $color-white: #fff;
   }
 }
 
+/* in Home.vue, splits title into two boxes */
 @mixin menu-nav-box($align, $color, $height:null) {
   $sub-menu-margin: 1.875em;
 
@@ -132,6 +229,24 @@ $color-white: #fff;
   }
 }
 
+.menu--hide {
+  top: -4.1em;
+}
+
+.menu--show {
+  top: 0;
+}
+
+.menu--dark-scroll {
+  background-color: rgba(34, 34, 34, 0.9);
+  box-shadow: rgba(0, 0, 0, 0.9) 0 7px 11px 0;
+}
+
+.menu--light-scroll {
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: rgba(79, 79, 79, 0.9) 0 4px 7px -6px;
+}
+
 .router-link-exact-active {
   font-weight: bold;
 }
@@ -140,37 +255,16 @@ $color-white: #fff;
   overflow: hidden;
 }
 
-/*
-* Desktop styling
-*/
-.menu--desktop.menu--subpage {
-  /* margin-bottom: 2.8em; */
-  padding: 1.25rem;
+a::after {
+  display: block;
+  width: 0;
+  height: 0.188rem;
+  content: '';
+  transition: 0.25s cubic-bezier(0.7, 0.05, 0.4, 1);
 }
 
-.menu--desktop .btn--menu {
-  display: none;
-}
-
-.menu--desktop .menu__nav {
-  display: flex;
-  justify-content: center;
-
-  @media #{$mq-desktop-nav} {
-    font-size: scalable-font-size(1rem, 0.2rem, $bp-menu-nav, $bp-header-lg);
-  }
-
-  @media #{$mq-header-lg} {
-    font-size: max-font-size(1rem, 0.2rem);
-  }
-}
-
-.menu--desktop .menu__nav__left {
-  @include menu-nav-box(right, $color-toggle-light-bg-link);
-}
-
-.menu--desktop .menu__nav__right {
-  @include menu-nav-box(left, $color-toggle-dark-bg-link, 0.15rem);
+a:hover::after {
+  width: 100%;
 }
 
 /*
@@ -288,5 +382,79 @@ $color-white: #fff;
   @extend %shared-x-btn;
 
   transform: rotate(-45deg);
+}
+
+/*
+* Desktop styling
+*/
+.menu--desktop {
+  .btn--menu { /* stylelint-disable-line no-descending-specificity */
+    display: none;
+  }
+
+  .menu__nav {
+    display: flex;
+    justify-content: center;
+
+    @media #{$mq-desktop-nav} {
+      font-size: scalable-font-size(1rem, 0.2rem, $bp-menu-nav, $bp-header-lg);
+    }
+
+    @media #{$mq-header-lg} {
+      font-size: max-font-size(1rem, 0.2rem);
+    }
+  }
+
+  &.menu--home .menu__nav__left {
+    @include menu-nav-box(right, $color-toggle-light-bg-link);
+  }
+
+  &.menu--home .menu__nav__right {
+    @include menu-nav-box(left, $color-toggle-dark-bg-link, 0.15rem);
+  }
+}
+
+.menu--desktop.menu--subpage {
+  position: relative;
+  padding: 0.8rem 0;
+
+  /* transition: 0.2s ease-in; */
+  transition: 1s ease;
+
+  a {
+    margin: 0 1em;
+  }
+
+  &.menu--dark {
+    /* background-color: #000; */
+
+    a {
+      color: #a5a5a5;
+
+      &::after {
+        background-color: $color-toggle-light-bg;
+      }
+    }
+
+    .router-link-exact-active {
+      color: #ccc;
+    }
+  }
+
+  &.menu--light {
+    /* background: rgba(255, 255, 255, 0.95); */
+
+    a {
+      color: #8d8d8d;
+
+      &::after {
+        background-color: $color-toggle-dark-bg;
+      }
+    }
+
+    .router-link-exact-active {
+      color: #5d5d5d;
+    }
+  }
 }
 </style>
