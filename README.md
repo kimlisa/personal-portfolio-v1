@@ -1,7 +1,6 @@
 # personal-portfolio-v1
 
 ## Working Demo:
-https://www.kimlisa.me
 
 ## Purpose:
 - Research and test out ts/es and scss linting
