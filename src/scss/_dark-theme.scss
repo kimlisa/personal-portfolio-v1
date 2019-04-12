@@ -3,6 +3,12 @@
   font-weight: 400;
   color: #ccc;
 
+  button[disabled=disabled][type=button] {
+    border: 1px solid #3c3c3c;
+    background-color: #2a2a2a;
+    color: #484848;
+  }
+
   a {
     color: #00b77f;
   }
@@ -60,7 +66,7 @@
       color: $color-h4;
     }
 
-    .contact-form div {
+    .contact-form .border--default {
       border-color: $color-h4;
     }
 

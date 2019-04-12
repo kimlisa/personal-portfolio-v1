@@ -151,6 +151,7 @@ export default class App extends Vue {
 
 html {
   @include font-primary;
+  //@include font-secondary;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -198,6 +199,14 @@ button {
   &:hover {
     transition: 0.15s ease-in;
   }
+
+  &[disabled=disabled][type=button]:hover {
+    cursor:not-allowed;
+    background-color: inherit;
+    color: inherit;
+  }
+
+
 }
 
 a {
@@ -288,6 +297,11 @@ ul {
   &.ul--grid {
     display: grid;
   }
+}
+
+input,
+textarea {
+  @include font-secondary;
 }
 
 #app {

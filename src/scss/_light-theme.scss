@@ -3,6 +3,12 @@
   font-weight: 300;
   color: #000;
 
+  button[disabled=disabled][type=button] {
+    border: 1px solid #c7c7c7;
+    background-color: #d8d8d8;
+    color: #9f9d9d;
+  }
+
   a {
     /*color: #00b77f;*/
     color: #008d83;
@@ -75,7 +81,7 @@
       color: #0f9d7b;
     }
 
-    .contact-form div {
+    .contact-form .border--default {
       border-color: #0f9d7b;
     }
 
