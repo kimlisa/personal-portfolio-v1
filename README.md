@@ -1,7 +1,6 @@
 # personal-portfolio-v1
 
-## Live Unfinished Demo deployed with surge:
-https://kimlisa.surge.sh
+## to be deployed
 
 ## Purpose:
 - Research and test out ts/es and scss linting
