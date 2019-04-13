@@ -36,26 +36,25 @@
             class="menu__nav__mobile__close-btn"
             @click="toggleMobileNav"
           ></div>
-          <a href="" target="_blank">resume</a>
-          <div class="menu__nav__mobile__social">
-            <a href="https://github.com/kimlisa" target="_blank">
-              <font-awesome-icon :icon="['fab', 'github']" />
-            </a>
-            <a href="https://www.linkedin.com/in/kim-lisa/" target="_blank">
-              <font-awesome-icon :icon="['fab', 'linkedin-in']" />
-            </a>
-          </div> <!--  menu__nav__mobile__social -->
-        </div> <!-- menu__nav__mobile -->
+          <SocialMediaIcons :resumeText="true"/>
+        </div>
       </div>
     </div> <!-- menu__nav-wrapper -->
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import {
+  Component, Prop, Vue, Watch,
+} from 'vue-property-decorator';
 import { IMenuName, MenuName } from '@/consts/consts';
+import SocialMediaIcons from './SocialMediaIcons.vue';
 
-@Component
+@Component({
+  components: {
+    SocialMediaIcons,
+  },
+})
 export default class Menu extends Vue {
   // props
   @Prop(Boolean) readonly mobileMenu!: boolean; // ! tells TS, mobileMenu is a non-null value
@@ -229,6 +228,22 @@ $color-white: #fff;
   }
 }
 
+@mixin anchor-underline {
+  a::after {
+    display: block;
+    width: 0;
+    height: 0.188rem;
+    content: '';
+    transition: 0.25s cubic-bezier(0.7, 0.05, 0.4, 1);
+  }
+
+  a:hover::after {
+    width: 100%;
+  }
+}
+
+@include anchor-underline;
+
 .menu--hide {
   top: -4.1em;
 }
@@ -253,18 +268,6 @@ $color-white: #fff;
 
 .no-behind-scroll {
   overflow: hidden;
-}
-
-a::after {
-  display: block;
-  width: 0;
-  height: 0.188rem;
-  content: '';
-  transition: 0.25s cubic-bezier(0.7, 0.05, 0.4, 1);
-}
-
-a:hover::after {
-  width: 100%;
 }
 
 /*
@@ -298,6 +301,7 @@ a:hover::after {
   color: $color-white;
   background: #6e6e6e;
   border-color: #696969;
+  box-shadow: 0 0.188rem 0.313rem 0.063rem rgba(0, 0, 0, 0.22);
 
   &:hover {
     background: #42b983;
@@ -343,22 +347,31 @@ a:hover::after {
   }
 }
 
-.menu--mobile .menu__nav__mobile {
-  padding-top: 1.25rem;
-}
-
-.menu--mobile .menu__nav__mobile__social {
-  display: flex;
+.menu--mobile ::v-deep .social-media-icons {
+  @include anchor-underline;
 
   a {
     padding: 0.813rem 1.375rem 0.313rem 0;
     font-size: 2.6rem;
-    line-height: 0;
+    line-height: 1em;
+    color: $color-mobile-menu-link;
 
     &::after {
       margin-top: 0.375rem;
+      background-color: $color-white;
     }
   }
+
+  .social-media-icons__resume {
+    display: inline-block;
+    margin-bottom: 0.2em;
+    font-size: 1.625rem;
+    text-transform: uppercase;
+  }
+}
+
+.menu--mobile .menu__nav__mobile {
+  padding-top: 1.25rem;
 }
 
 .menu--mobile .menu__nav__mobile__close-btn {

@@ -60,18 +60,21 @@ export default class ProjectFeatured extends Vue {
 
     &__left {
       flex-basis: 24em;
+      margin-right: $margin-flex-spacing;
     }
 
-    &__right img {
-      width: 28em;
+    &__right {
+      flex-basis: 28em;
 
-      /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4); */
-      box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+      img {
+        width: 100%;
+        box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+      }
     }
 
     .ul--grid {
-      grid-template-columns: minmax(6em, auto) minmax(9em, auto) minmax(1em, auto);
-      margin-bottom: 2em;
+      grid-template-columns: minmax(5.1em, auto) minmax(9em, auto) minmax(1em, auto);
+      margin-bottom: 3em;
       font-size: 0.8em;
 
       @include font-tertiary;
@@ -79,6 +82,10 @@ export default class ProjectFeatured extends Vue {
 
     li {
       margin-bottom: 0.4em;
+    }
+
+    ::v-deep .project-links {
+      margin-left: -0.36em;
     }
   }
 }

@@ -33,9 +33,9 @@
         </ul>
       </div>
     </div>
-    <button type="button" class="btn btn--big">
+    <a class="btn--big a--btn" href="./kimlisa_resume2019.pdf" target="_blank">
       View My Resume
-    </button>
+    </a>
   </section>
 </template>
 
@@ -46,13 +46,25 @@
   &__container {
     @include flex-between;
 
+    flex-wrap: wrap;
+    margin: 0 -1em;
+
+    div {
+      margin: 0 1em;
+    }
+
     ul {
-      margin-bottom: 4em;
+      margin-bottom: 3em;
 
       li {
         margin-bottom: 0.9em;
       }
     }
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 1em;
   }
 }
 </style>

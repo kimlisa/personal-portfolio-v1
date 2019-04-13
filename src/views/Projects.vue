@@ -29,4 +29,26 @@ export default class Projects extends Vue {}
 ::v-deep .project-featured {
   padding-top: 0;
 }
+
+@media screen and (max-width: 50.688em) {
+  ::v-deep .project-others h3 {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 50em) {
+  ::v-deep .project-featured__container {
+    flex-wrap: wrap-reverse;
+
+    div {
+      flex-basis: 100%;
+      margin: 0;
+    }
+
+    img {
+      margin-bottom: 2em;
+    }
+  }
+}
+
 </style>

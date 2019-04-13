@@ -15,15 +15,7 @@
             <font-awesome-icon icon="location-arrow" /> Greater Seattle Area
           </p>
           <p class="contact--social-icons">
-            <a href="./kimlisa_resume2019.pdf" target="_blank">
-              <font-awesome-icon icon="file-word"/>
-            </a>
-            <a href="" target="_blank">
-              <font-awesome-icon :icon="['fab', 'github']" />
-            </a>
-            <a href="" target="_blank">
-              <font-awesome-icon :icon="['fab', 'linkedin-in']" />
-            </a>
+            <SocialMediaIcons :resumtText="false"/>
           </p>
         </div>
       </div>
@@ -34,11 +26,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import ContactForm from '@/components/ContactForm.vue';
+import ContactForm from './ContactForm.vue';
+import SocialMediaIcons from './SocialMediaIcons.vue';
 
 @Component({
   components: {
     ContactForm,
+    SocialMediaIcons,
   },
 })
 export default class ContactSection extends Vue {
@@ -61,19 +55,11 @@ export default class ContactSection extends Vue {
   }
 
   ::v-deep .contact-form {
-    width: 100%;
-    max-width: 23em;
-
-    input {
-      width: 85%;
-    }
-
-    textarea {
-      width: 89%;
-    }
+    width: 50%;
   }
 
   .contact-section__container__left__text {
+    margin-right: $margin-flex-spacing;
     margin-bottom: 2em;
   }
 
@@ -91,7 +77,8 @@ export default class ContactSection extends Vue {
     &.contact--social-icons {
       margin-top: 3em;
 
-      svg {
+      ::v-deep .social-media-icons a {
+        margin-right: 0.7em;
         font-size: 2.3rem;
       }
     }

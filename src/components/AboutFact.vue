@@ -47,8 +47,13 @@
       text-align: left;
     }
 
-    &__right img {
-      width: 18em;
+    &__right {
+      flex-basis: 18em;
+      margin-right: $margin-flex-spacing;
+
+      img {
+        width: 100%;
+      }
     }
   }
 }

@@ -26,4 +26,23 @@ export default class Contact extends Vue {}
 ::v-deep .contact-section {
   padding-top: 0;
 }
+
+@media screen and (max-width: 50em) {
+  ::v-deep .contact-section {
+    .contact-section__container {
+      flex-wrap: wrap;
+
+      div {
+        flex-basis: 100%;
+      }
+    }
+
+    .contact-form {
+      padding: 2em;
+      margin-top: 3em;
+      border: 1px dashed rgba(15, 157, 123, 0.35);
+      border-radius: 0.5em;
+    }
+  }
+}
 </style>

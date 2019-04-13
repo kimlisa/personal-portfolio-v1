@@ -15,8 +15,7 @@
         <p>
           I strive to be minimalistic and simple. And I apply this to my life, my code,
           and my design. My coding motto is KISS, DRY, modularization, and consistency.
-          I am constantly learning to sharpen my skills and to keep up with the
-          ever changing technologies.
+          I am constantly learning to sharpen my skills and learn new technologies.
         </p>
       </div>
       <div class="about-bio__container__right">
@@ -39,8 +38,13 @@
       flex-basis: 30em;
     }
 
-    &__right img {
-      width: 17em;
+    &__right {
+      flex-basis: 18em;
+      margin-left: $margin-flex-spacing;
+
+      img {
+        width: 100%;
+      }
     }
   }
 }

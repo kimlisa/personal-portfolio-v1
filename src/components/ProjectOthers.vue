@@ -2,56 +2,69 @@
   <section class="project-others">
     <h3>other projects</h3>
     <div class="project-others__container">
-      <div class="project-others__card">
-        <ProjectLinks
-          gitHub="https://github.com/hwsc-org"
-          demo="https://hwsc-org.github.io/"
-        />
-        <h5>Personal Website V1</h5>
-        <p>
+      <ProjectCard>
+        <template v-slot:links>
+          <ProjectLinks
+            gitHub="https://github.com/kimlisa/personal-portfolio-v1"
+            demo="https://kimlisa.me"
+          />
+        </template>
+        <template v-slot:header>
+          Personal Website V1
+        </template>
+        <template v-slot:description>
           Designed and developed as a single page application.
           Used as a playground for researching, applying, practicing
           frontend tools and advanced CSS concepts.
-        </p>
-        <ul class="project-others__card__tool-list">
+        </template>
+        <template v-slot:tools>
           <li>Vue.js</li>
           <li>TypeScript</li>
           <li>AJAX</li>
           <li>SCSS</li>
-        </ul>
-      </div>
-      <div class="project-others__card">
-        <ProjectLinks
-          gitHub="https://github.com/hwsc-org"
-          demo="https://hwsc-org.github.io/"
-        />
-        <h5>HWSC Wiki</h5>
-        <p>
-          A simple static website to store documentations for HWSC App. Has features such as table of contents and
-          creating pages using GitHub mark down language.
-        </p>
-        <ul class="project-others__card__tool-list">
+        </template>
+      </ProjectCard>
+      <ProjectCard>
+        <template v-slot:links>
+          <ProjectLinks
+            gitHub="https://github.com/hwsc-org/hwsc-org.github.io"
+            demo="https://hwsc-org.github.io/"
+          />
+        </template>
+        <template v-slot:header>
+          HWSC Wiki
+        </template>
+        <template v-slot:description>
+          A simple static website to store documentations for HWSC App. Has features such as
+          creating pages using GitHub mark down language and scan pages headers into
+          table of contents.
+        </template>
+        <template v-slot:tools>
           <li>Jekyll</li>
           <li>Bootstrap</li>
           <li>GitHub Pages</li>
-        </ul>
-      </div>
-      <div class="project-others__card">
-        <ProjectLinks
-          gitHub="https://github.com/hwsc-org"
-          demo="https://hwsc-org.github.io/"
-        />
-        <h5>JavaScript Calculator</h5>
-        <p>
+        </template>
+      </ProjectCard>
+      <ProjectCard>
+        <template v-slot:links>
+          <ProjectLinks
+            gitHub="https://github.com/kimlisa/js-calculator"
+            demo="https://js-calc-2017.surge.sh/"
+          />
+        </template>
+        <template v-slot:header>
+          JavaScript Calculator
+        </template>
+        <template v-slot:description>
           Simple calculator built in 2017, to practice beginner HTML, CSS,
           JS, and DOM manipulation.
-        </p>
-        <ul class="project-others__card__tool-list">
+        </template>
+        <template v-slot:tools>
           <li>JavaScript</li>
           <li>CSS</li>
           <li>HTML</li>
-        </ul>
-      </div>
+        </template>
+      </ProjectCard>
     </div>
   </section>
 </template>
@@ -59,10 +72,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import ProjectLinks from '@/components/ProjectLinks.vue';
+import ProjectCard from '@/components/ProjectCard.vue';
 
 @Component({
   components: {
     ProjectLinks,
+    ProjectCard,
   },
 })
 export default class ProjectOthers extends Vue {
@@ -77,53 +92,9 @@ export default class ProjectOthers extends Vue {
   text-align: right;
 
   &__container {
-    @include flex-between;
-
-    align-items: stretch;
-  }
-
-  &__card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 15.6em;
-    padding: 1.5em;
-    font-size: 0.94em;
-    text-align: left;
-    border-radius: 4px;
-    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.1);
-
-    p {
-      flex-grow: 1;
-      margin-bottom: 1.8em;
-      line-height: 1.5em;
-    }
-
-    h5 {
-      margin: 0.6em 0 0 0;
-      font-size: 1.46em;
-    }
-
-    ul {
-      display: flex;
-      flex-shrink: 0;
-      flex-wrap: wrap;
-      padding-left: 0;
-      margin-bottom: 0;
-      font-size: 0.8em;
-      line-height: 1.7em;
-
-      @include font-tertiary;
-
-      li {
-        margin: 0 1.4em 0 0;
-      }
-
-      li::before {
-        margin: 0;
-        content: '';
-      }
-    }
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
+    grid-gap: 2em 1em;
   }
 }
 </style>

@@ -12,15 +12,7 @@
       :class="hideSidebar ? 'app__sidebar--hide' : 'app__sidebar--show'"
       v-show="$route.name !== $_static.HOME"
     >
-      <a href="https://github.com/kimlisa" target="_blank">
-        <font-awesome-icon :icon="['fab', 'github']" />
-      </a>
-      <a href="https://www.linkedin.com/in/kim-lisa/" target="_blank">
-        <font-awesome-icon :icon="['fab', 'linkedin-in']" />
-      </a>
-      <a>
-        <font-awesome-icon icon="file-word"/>
-      </a>
+      <SocialMediaIcons :resumeText="false"/>
       <BtnColorToggler
         :smallBtn="true"
         :toggleState="colorToggled"
@@ -52,11 +44,13 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { IMenuName, MenuName } from '@/consts/consts';
 import Menu from '@/components/Menu.vue';
 import BtnColorToggler from '@/components/BtnColorToggler.vue';
+import SocialMediaIcons from '@/components/SocialMediaIcons.vue';
 
 @Component({
   components: {
     Menu,
     BtnColorToggler,
+    SocialMediaIcons,
   },
 })
 export default class App extends Vue {
@@ -113,9 +107,18 @@ export default class App extends Vue {
     // } else {
     //   console.log('mq NOT matched: ', width);
     // }
+
+    if (this.$route.name === this.$_static.HOME) return;
+
+    if (window.innerWidth <= 958) {
+      this.hideSidebar = true;
+    } else {
+      this.sidebarToggler();
+    }
   }
 
   sidebarToggler() {
+    if (window.innerWidth <= 958) return;
     if (this.mobileMenu || this.$route.name === this.$_static.HOME || this.$_scrolling) return;
 
     this.$_scrolling = true;
@@ -136,8 +139,8 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-@import 'scss/light-theme';
-@import 'scss/dark-theme';
+@import 'scss/theme-light';
+@import 'scss/theme-dark';
 
 %shared-home-bg {
   position: absolute;
@@ -187,35 +190,36 @@ body {
   background-color: $color-toggle-light-bg;
 }
 
-button {
+%shared-btn-style {
   padding: 0.625em 0.938em;
   font-size: 1rem;
   cursor: pointer;
   border-style: solid;
   border-width: 1px;
   border-radius: 0.25rem;
-  box-shadow: 0 0.188rem 0.313rem 0.063rem rgba(0, 0, 0, 0.22);
 
   &:hover {
     transition: 0.15s ease-in;
   }
+}
+
+button {
+  @extend %shared-btn-style;
 
   &[disabled=disabled][type=button]:hover {
-    cursor:not-allowed;
-    background-color: inherit;
     color: inherit;
+    cursor: not-allowed;
+    background-color: inherit;
   }
-
-
 }
 
 a {
   display: inline-block;
   text-decoration: none;
+}
 
-  &.a--btn {
-
-  }
+.a--btn {
+  @extend %shared-btn-style;
 }
 
 h1 {
@@ -243,18 +247,34 @@ h3 {
   letter-spacing: 0.03em;
 
   @include font-secondary;
+
+  @media screen and (max-width: 35em) {
+    font-size: 2.3em;
+  }
 }
 
 h4 {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 2em;
+
+  @media screen and (max-width: 35em) {
+    font-size: 1.5em;
+  }
+
+  @media screen and (max-width: 25em) {
+    font-size: 1.3em;
+  }
 }
 
 h5 {
   margin-top: 0;
   font-size: 1.1em;
   color: #979797;
+
+  @media screen and (max-width: 25em) {
+    font-size: 1em;
+  }
 }
 
 h6 {
@@ -292,6 +312,10 @@ ul {
     margin: 0 0.625rem 0 -1.25rem;
     font-size: 1.2em;
     content: '▹';
+
+    @media screen and (max-width: 25em) {
+      margin-right: 0.1em;
+    }
   }
 
   &.ul--grid {
@@ -389,6 +413,14 @@ textarea {
 
   .app__content {
     padding: 0 5.5em;
+
+    @media screen and (max-width: 59.875em) {
+      padding: 0 3em;
+    }
+
+    @media screen and (max-width: 30.313em) {
+      padding: 0 1.5em;
+    }
   }
 
   &.app--dark .app__content {

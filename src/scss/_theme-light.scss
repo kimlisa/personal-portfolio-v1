@@ -59,8 +59,19 @@
     }
   }
 
-  .project-others__card {
+  .project-featured__container__right img {
+    box-shadow:
+      0 0 0 1px rgba(35,35,35,0.11),
+      0 1px 4px 0 rgba(165,165,165,0.55),
+      0 1px 2px rgba(228,228,228,0.64);
+  }
+
+  .project-card {
     background-color: #fafafa;
+    box-shadow:
+      0 0 0 1px rgba(177, 177, 177, 0.11),
+      0 1px 4px 0 rgba(192, 192, 192, 0.15),
+      0 1px 2px rgba(228, 228, 228, 0.64);
 
     li {
       color: #06976f;

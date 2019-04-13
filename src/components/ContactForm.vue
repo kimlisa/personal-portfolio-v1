@@ -16,13 +16,18 @@
     >
       <label class="sr-only">Keep this field blank</label>
       <input id="honeypot" type="text" name="honeypot" value="" ref="honeypot">
-
       <div
         class="contact-form__input"
         :class="errorName ? 'border--red' : 'border--default'"
       >
         <font-awesome-icon icon="user" />
-        <input type="text" name="name" placeholder="Name" ref="name" @focus="errorName = false">
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          ref="name"
+          @focus="errorName = false"
+        >
         <div v-show="errorName">
           <font-awesome-icon icon="exclamation-triangle" class="error input--error"/>
           <span class="form--error error">name required</span>
@@ -33,7 +38,13 @@
         :class="errorEmail ? 'border--red' : 'border--default'"
       >
         <font-awesome-icon icon="envelope" />
-        <input type="email" name="email" placeholder="Email" ref="email" @focus="errorEmail = false">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          ref="email"
+          @focus="errorEmail = false"
+        >
         <div v-show="errorEmail">
           <font-awesome-icon icon="exclamation-triangle" class="error input--error"/>
           <span class="form--error error">valid email required</span>
@@ -68,15 +79,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Loader from '@/components/Loader.vue';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import Loader from './Loader.vue';
 
 @Component({
   components: {
     Loader,
   },
 })
-export default class NAME extends Vue {
+export default class ContactForm extends Vue {
   expandMsgBox: boolean = false;
 
   loading: boolean = false;
@@ -95,6 +106,19 @@ export default class NAME extends Vue {
 
   emailRegex: RegExp = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
+  $refs!: {
+    name: HTMLFormElement,
+    email: HTMLFormElement,
+    message: HTMLFormElement,
+    contactForm: HTMLFormElement,
+    honeyPot: HTMLFormElement,
+  };
+
+  @Watch('$route')
+  onRouteChange() {
+    this.resetEmailForm();
+  }
+
   validateInputs(inputs: any): boolean {
     if (inputs.name.value.length === 0) {
       this.errorName = true;
@@ -109,6 +133,17 @@ export default class NAME extends Vue {
     }
 
     return !this.errorName && !this.errorEmail && !this.errorMsg;
+  }
+
+  resetEmailForm() {
+    this.$refs.contactForm.reset();
+    this.loading = false;
+    this.loaderMsg = '';
+    this.showEmailForm = true;
+    this.errorName = false;
+    this.errorEmail = false;
+    this.errorMsg = false;
+    this.errorSendingEmail = false;
   }
 
   sendEmail() {
@@ -213,8 +248,19 @@ button {
 
   .contact-form__input {
     position: relative;
+    display: flex;
+    align-items: center;
     margin-bottom: 1.4em;
     border-bottom: 1px solid;
+
+    input {
+      width: 100%;
+      padding: 0.5em;
+      font-size: 1.1rem;
+      color: #9f9f9f;
+      background: transparent;
+      border: none;
+    }
   }
 
   svg {
@@ -222,16 +268,13 @@ button {
     margin-right: 0.5em;
   }
 
-  input {
-    padding: 0.5em;
-    font-size: 1.1rem;
-    color: #9f9f9f;
-    background: transparent;
-    border: none;
+  .contact-form__input--text {
+    align-items: flex-start;
   }
 
-  .contact-form__input--text {
-    display: flex;
+  .contact-form__input--text svg {
+    position: relative;
+    margin-top: 0.2em;
   }
 
   .msg-box-expand {
@@ -239,6 +282,7 @@ button {
   }
 
   textarea {
+    width: 100%;
     height: 1em;
     padding: 0.5em;
     font-size: 1.12rem;
