@@ -223,11 +223,16 @@ button {
   max-width: 15em;
   color: #606060;
   text-align: center;
+  margin: 0 auto;
 
   svg {
     margin: 0 auto;
-    margin-top: 2em;
+    margin-top: 1em;
     font-size: 2.5em;
+  }
+
+  p {
+    margin-bottom: 2em;
   }
 }
 
@@ -270,11 +275,9 @@ button {
 
   .contact-form__input--text {
     align-items: flex-start;
-  }
-
-  .contact-form__input--text svg {
-    position: relative;
-    margin-top: 0.2em;
+    svg {
+      margin-top: 0.1em;
+    }
   }
 
   .msg-box-expand {

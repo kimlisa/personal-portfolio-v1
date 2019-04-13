@@ -422,7 +422,7 @@ textarea {
   &.app--dark {
     .app__sidebar {
       .btn--small {
-        background-color: #F4F4F4;
+        background-color: #f4f4f4;
       }
     }
 
@@ -434,7 +434,7 @@ textarea {
   &.app--light {
     .app__sidebar {
       .btn--small {
-        background-color: #C0C0C0;
+        background-color: #c0c0c0;
       }
 
       .btn-color-toggler__moon,

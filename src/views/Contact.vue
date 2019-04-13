@@ -32,12 +32,13 @@ export default class Contact extends Vue {}
     .contact-section__container {
       flex-wrap: wrap;
 
-      div {
+      &__left {
         flex-basis: 100%;
       }
     }
 
     .contact-form {
+      width: 100%;
       padding: 2em;
       margin-top: 3em;
       border: 1px dashed rgba(15, 157, 123, 0.35);
