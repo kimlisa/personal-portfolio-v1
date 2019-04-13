@@ -131,7 +131,7 @@ $spacing-toggle-icon: 0.34rem;
 
 .toggled-sun .btn-color-toggler__sun,
 .toggled-moon .btn-color-toggler__moon {
-  color: #fff;
+  color: #fff !important;
   transition: 1s ease;
 }
 
@@ -181,7 +181,7 @@ $spacing-toggle-icon: 0.34rem;
   }
 
   &.toggled-moon::after {
-    top: 59%;
+    top: 58%;
     bottom: 0;
   }
 }

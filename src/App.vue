@@ -312,10 +312,6 @@ ul {
     margin: 0 0.625rem 0 -1.25rem;
     font-size: 1.2em;
     content: '▹';
-
-    @media screen and (max-width: 25em) {
-      margin-right: 0.1em;
-    }
   }
 
   &.ul--grid {
@@ -423,12 +419,33 @@ textarea {
     }
   }
 
-  &.app--dark .app__content {
-    @include dark-theme;
+  &.app--dark {
+    .app__sidebar {
+      .btn--small {
+        background-color: #F4F4F4;
+      }
+    }
+
+    .app__content {
+      @include dark-theme;
+    }
   }
 
-  &.app--light .app__content {
-    @include light-theme;
+  &.app--light {
+    .app__sidebar {
+      .btn--small {
+        background-color: #C0C0C0;
+      }
+
+      .btn-color-toggler__moon,
+      .btn-color-toggler__sun {
+        color: #dcdcdc;
+      }
+    }
+
+    .app__content {
+      @include light-theme;
+    }
   }
 }
 

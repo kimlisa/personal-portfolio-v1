@@ -84,6 +84,12 @@ export default class ProjectFeatured extends Vue {
       margin-bottom: 0.4em;
     }
 
+    li::before {
+      @media screen and (max-width: 25em) {
+        margin-right: 0.1em;
+      }
+    }
+
     ::v-deep .project-links {
       margin-left: -0.36em;
     }

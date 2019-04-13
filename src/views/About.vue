@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <Cover
-      title="about me"
+      title="about"
       subtitle="a piece of myself"
     />
     <Bio/>

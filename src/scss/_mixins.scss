@@ -10,4 +10,12 @@
   padding: 6.2em 0;
   margin: 0 auto;
   text-align: left;
+
+  @media screen and (max-width: 66.75em) {
+    padding: 4em 0;
+  }
+
+  @media screen and (max-width: 45.938em) {
+    padding: 3em 0;
+  }
 }
