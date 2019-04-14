@@ -1,7 +1,7 @@
 <template>
   <transition
-    name="fade"
-    mode="out-in"
+    :name="transitionName"
+    :mode="transitionMode"
   >
     <slot/>
   </transition>
@@ -14,7 +14,22 @@ import { IMenuName, MenuName } from '@/consts/consts';
 
 @Component
 export default class Menu extends Vue {
+  transitionName: string = '';
 
+  transitionMode: string = '';
+
+  created() {
+    this.$router.beforeEach((to, from, next) => {
+      if (to.name === MenuName.HOME || from.name === MenuName.HOME) {
+        this.transitionName = '';
+        this.transitionMode = '';
+      } else {
+        this.transitionName = 'fade';
+        this.transitionMode = 'out-in';
+      }
+      next();
+    });
+  }
 }
 </script>
 

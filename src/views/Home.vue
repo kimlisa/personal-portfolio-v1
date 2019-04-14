@@ -1,14 +1,18 @@
 <template>
   <div class="home">
     <div class="home__title">
-      <div class="home__title__left">
-        <h1>LISA</h1>
-        <h2>Software</h2>
-      </div>
-      <div class="home__title__right">
-        <h1><span class="home__title__spacer">&nbsp;</span>KIM</h1>
-        <h2>Engineer</h2>
-      </div>
+      <transition name="slide-in-left" appear>
+        <div class="home__title__left">
+          <h1>LISA</h1>
+          <h2>Software</h2>
+        </div>
+      </transition>
+      <transition name="slide-in-right" appear>
+        <div class="home__title__right">
+          <h1><span class="home__title__spacer">&nbsp;</span>KIM</h1>
+          <h2>Engineer</h2>
+        </div>
+      </transition>
     </div>
     <HoverPopover
       :content="'Toggles sub-pages bg-color'"
@@ -127,4 +131,23 @@ h2 {
   }
 }
 
+.slide-in-left-enter {
+  transform: translateX(-100%);
+}
+
+.slide-in-right-leave-to {
+  transform: translate(-100%);
+}
+
+.slide-in-left-leave-to,
+.slide-in-right-enter {
+  transform: translateX(100%);
+}
+
+.slide-in-left-enter-active,
+.slide-in-left-leave-active,
+.slide-in-right-enter-active,
+.slide-in-right-leave-active {
+  transition: 0.5s ease-out;
+}
 </style>
