@@ -2,7 +2,7 @@
   <div class="about">
     <Cover
       title="about"
-      subtitle="a piece of myself"
+      subtitle="me, her, she"
     />
     <Bio/>
     <Skills />

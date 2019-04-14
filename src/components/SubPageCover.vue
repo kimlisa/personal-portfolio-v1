@@ -38,16 +38,24 @@ export default class Menu extends Vue {
     this.$_coverElement = this.$refs.cover as HTMLElement;
     this.$_coverRectDiff = 170;
 
-    window.addEventListener('scroll', () => {
-      const cover = this.$_coverElement.getBoundingClientRect();
-      const currRectDiff = cover.bottom + cover.top;
+    window.addEventListener('scroll', this.toggleCoverOpacity);
+  }
 
-      if (currRectDiff >= this.$_coverRectDiff) {
-        this.$_coverElement.style.opacity = '1';
-      } else {
-        this.$_coverElement.style.opacity = '0';
-      }
-    });
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.toggleCoverOpacity);
+  }
+
+  toggleCoverOpacity() {
+
+    if (window.scrollY === 0) return;
+    const cover = this.$_coverElement.getBoundingClientRect();
+    const currRectDiff = cover.bottom + cover.top;
+
+    if (currRectDiff >= this.$_coverRectDiff) {
+      this.$_coverElement.style.opacity = '1';
+    } else {
+      this.$_coverElement.style.opacity = '0';
+    }
   }
 }
 </script>
@@ -55,13 +63,30 @@ export default class Menu extends Vue {
 <style lang="scss" scoped>
 h1 {
   margin-top: 0;
-  font-size: 5em;
+  font-size: 3.5em;
   letter-spacing: 0.05em;
+
+  @media screen and (min-width: 561px) {
+    font-size: scalable-font-size(5rem, 2rem, $bp-menu-nav, $bp-header-lg);
+  }
+
+  @media #{$mq-header-lg} {
+    font-size: max-font-size(5rem, 2rem);
+  }
 }
 
 h2 {
   margin-top: 1em;
-  font-size: 2em;
+  /*font-size: 2em;*/
+  font-size: 1.4em;
+
+  @media screen and (min-width: 560px) {
+    font-size: scalable-font-size(1.7rem, 1rem, $bp-menu-nav, $bp-header-lg);
+  }
+
+  @media #{$mq-header-lg} {
+    font-size: max-font-size(1.7rem, 1rem);
+  }
 }
 
 .cover__titles {

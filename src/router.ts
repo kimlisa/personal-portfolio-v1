@@ -5,7 +5,7 @@ import { MenuName } from '@/consts/consts';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -38,8 +38,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/Contact.vue'),
     },
   ],
-  scrollBehavior(to, from, savedPosition) {
-    // https://router.vuejs.org/guide/advanced/scroll-behavior.html#scroll-behavior
-    return { x: 0, y: 0 };
-  },
 });
+
+// removes flashing to top before transitioning caused by scrollTop
+router.beforeEach((to, from, next) => {
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 200);
+  next();
+});
+
+export default router;

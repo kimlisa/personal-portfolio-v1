@@ -26,12 +26,14 @@
       />
     </nav>
     <main class="app__content">
-      <keep-alive>
-        <router-view
-          @color-toggled="colorToggled = $event"
-          :colorToggled="colorToggled"
-        />
-      </keep-alive>
+      <TransitionPage>
+        <keep-alive>
+          <router-view
+            @color-toggled="colorToggled = $event"
+            :colorToggled="colorToggled"
+          />
+        </keep-alive>
+      </TransitionPage>
     </main>
     <footer v-show="$route.name !== $_static.HOME" class="app__footer">
       <p>Designed and Built by Lisa Kim, 2019</p>
@@ -45,12 +47,14 @@ import { IMenuName, MenuName } from '@/consts/consts';
 import Menu from '@/components/Menu.vue';
 import BtnColorToggler from '@/components/BtnColorToggler.vue';
 import SocialMediaIcons from '@/components/SocialMediaIcons.vue';
+import TransitionPage from '@/components/TransitionPage.vue';
 
 @Component({
   components: {
     Menu,
     BtnColorToggler,
     SocialMediaIcons,
+    TransitionPage,
   },
 })
 export default class App extends Vue {
@@ -340,6 +344,7 @@ textarea {
   bottom: 0;
   left: 3%;
   z-index: 1;
+  transition: 0.4s ease-in;
 
   a {
     display: block;
@@ -423,6 +428,7 @@ textarea {
     .app__sidebar {
       .btn--small {
         background-color: #f4f4f4;
+        border: none;
       }
     }
 
@@ -461,20 +467,5 @@ footer p {
   background-color: transparent;
   box-shadow: none;
   transition: 0.15s ease-out;
-}
-
-.fade-out-enter-active,
-.fade-out-leave-active {
-  transition-duration: 0.25s;
-  transition-property: opacity;
-}
-
-.fade-out-enter-active {
-  transition-delay: 0.25s;
-}
-
-.fade-out-enter,
-.fade-out-leave-active {
-  opacity: 0;
 }
 </style>
