@@ -221,9 +221,9 @@ button {
   flex-direction: column;
   justify-content: center;
   max-width: 15em;
+  margin: 0 auto;
   color: #606060;
   text-align: center;
-  margin: 0 auto;
 
   svg {
     margin: 0 auto;
@@ -275,6 +275,7 @@ button {
 
   .contact-form__input--text {
     align-items: flex-start;
+
     svg {
       margin-top: 0.1em;
     }

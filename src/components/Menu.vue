@@ -432,7 +432,7 @@ $color-white: #fff;
   padding: 0.8rem 0;
 
   /* transition: 0.2s ease-in; */
-  transition: 1s ease;
+  transition: 0.3s ease;
 
   a {
     margin: 0 1em;

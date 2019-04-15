@@ -77,7 +77,8 @@ h1 {
 
 h2 {
   margin-top: 1em;
-  /*font-size: 2em;*/
+
+  /* font-size: 2em; */
   font-size: 1.4em;
 
   @media screen and (min-width: 560px) {

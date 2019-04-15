@@ -19,17 +19,20 @@
         @color-toggled="colorToggled = $event"
       />
     </aside>
-    <nav class="app__nav">
-      <Menu
-        :mobileMenu="mobileMenu"
-        :colorToggled="colorToggled"
-      />
-    </nav>
+    <transition name="fade-in-top">
+      <nav class="app__nav" v-if="showMenuTrans">
+        <Menu
+          :mobileMenu="mobileMenu"
+          :colorToggled="colorToggled"
+        />
+      </nav>
+    </transition>
     <main class="app__content">
       <TransitionPage>
         <keep-alive>
           <router-view
             @color-toggled="colorToggled = $event"
+            @showMenuTrans="showMenuTrans = true"
             :colorToggled="colorToggled"
           />
         </keep-alive>
@@ -64,6 +67,8 @@ export default class App extends Vue {
 
   hideSidebar: boolean = true;
 
+  showMenuTrans: boolean = false;
+
   // https://github.com/vuejs/vue-class-component#undefined-will-not-be-reactive
   // 'undefined as any' bypasses type checking
   private $_static: IMenuName = undefined as any; // eslint-disable-line camelcase
@@ -78,6 +83,8 @@ export default class App extends Vue {
 
   created() {
     this.$_static = MenuName;
+
+
 
     // load users bg color preference if any
     const userPreference: Storage = window.localStorage;
@@ -344,7 +351,7 @@ textarea {
   bottom: 0;
   left: 3%;
   z-index: 1;
-  transition: 0.4s ease-in;
+  transition: 0.3s ease-in;
 
   a {
     display: block;
@@ -391,7 +398,7 @@ textarea {
     padding: 3.75em 0;
   }
 
-  &::before {
+  /* &::before {
     @extend %shared-home-bg;
 
     left: 0;
@@ -403,7 +410,7 @@ textarea {
 
     right: 0;
     background-color: $color-toggle-dark-bg;
-  }
+  } */
 }
 
 .app--subpage {
@@ -468,4 +475,18 @@ footer p {
   box-shadow: none;
   transition: 0.15s ease-out;
 }
+
+.fade-in-top-enter {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+.fade-in-top-enter-active,
+.fade-in-top-leave-active {
+  transition: 0.5s;
+}
+
+.fade-in-top-leave-to {
+  transform: translateY(100%);
+}
+
 </style>

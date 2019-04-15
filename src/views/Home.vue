@@ -1,28 +1,39 @@
 <template>
   <div class="home">
+    <div class="home__bg">
+      <transition name="slide-in-left" appear @afterEnter="afterShowTitle">
+        <div class="home__bg__left"></div>
+      </transition>
+      <transition name="slide-in-right" appear>
+        <div class="home__bg__right"></div>
+      </transition>
+    </div>
     <div class="home__title">
-      <transition name="slide-in-left" appear>
-        <div class="home__title__left">
+      <transition name="slide-in-top" @afterEnter="afterShowButtonMenu">
+        <div class="home__title__left" v-if="showTitleTrans">
           <h1>LISA</h1>
           <h2>Software</h2>
         </div>
       </transition>
-      <transition name="slide-in-right" appear>
-        <div class="home__title__right">
+      <transition name="slide-in-bottom">
+        <div class="home__title__right" v-if="showTitleTrans">
           <h1><span class="home__title__spacer">&nbsp;</span>KIM</h1>
           <h2>Engineer</h2>
         </div>
       </transition>
     </div>
-    <HoverPopover
-      :content="'Toggles sub-pages bg-color'"
-      class="color-toggler"
-    >
-      <BtnColorToggler
-        :smallBtn="false"
-        :toggleState="colorToggled"
-        @color-toggled="$emit('color-toggled', $event)"/>
-    </HoverPopover>
+    <transition name="fade-in-bottom">
+      <HoverPopover
+        :content="'Toggles sub-pages bg-color'"
+        class="color-toggler"
+      >
+        <BtnColorToggler
+          v-if="showTogglerTrans"
+          :smallBtn="false"
+          :toggleState="colorToggled"
+          @color-toggled="$emit('color-toggled', $event)"/>
+      </HoverPopover>
+    </transition>
   </div>
 </template>
 
@@ -39,10 +50,48 @@ import BtnColorToggler from '@/components/BtnColorToggler.vue';
 })
 export default class Home extends Vue {
   @Prop(Boolean) readonly colorToggled!: boolean;
+
+  showTitleTrans: boolean = false;
+
+  showTogglerTrans: boolean = false;
+
+  afterShowTitle() {
+    this.showTitleTrans = true;
+  }
+
+  afterShowButtonMenu() {
+    this.showTogglerTrans = true;
+    this.$emit('showMenuTrans');
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.home {
+}
+
+.home__bg {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background: #e1e1e1;
+
+  &__left {
+    width: 50%;
+    height: 100vh;
+    background-color: $color-toggle-light-bg;
+  }
+
+  &__right {
+    width: 50%;
+    height: 100vh;
+    background-color: $color-toggle-dark-bg;
+  }
+}
+
 .home__title {
   display: flex;
   align-items: center;
@@ -131,12 +180,17 @@ h2 {
   }
 }
 
-.slide-in-left-enter {
-  transform: translateX(-100%);
+.slide-in-left-enter,
+.slide-in-right-enter,
+.slide-in-top-enter,
+.slide-in-bottom-enter,
+.fade-in-bottom-enter {
+  opacity: 0;
 }
 
+.slide-in-left-enter,
 .slide-in-right-leave-to {
-  transform: translate(-100%);
+  transform: translateX(-100%);
 }
 
 .slide-in-left-leave-to,
@@ -150,4 +204,27 @@ h2 {
 .slide-in-right-leave-active {
   transition: 0.5s ease-out;
 }
+
+.slide-in-top-enter,
+.slide-in-bottom-leave-to,
+.fade-in-bottom-leave-to {
+  transform: translateY(-100%);
+}
+
+.slide-in-bottom-enter,
+.slide-in-top-leave-to,
+.fade-in-bottom-enter {
+  transform: translateY(100%);
+}
+
+
+.slide-in-top-enter-active,
+.slide-in-top-leave-active,
+.slide-in-bottom-enter-active,
+.slide-in-bottom-leave-active {
+  transition: 0.5s ease-out;
+}
+
+
+
 </style>

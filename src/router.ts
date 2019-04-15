@@ -44,7 +44,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   setTimeout(() => {
     window.scrollTo(0, 0);
-  }, 200);
+  }, 300);
   next();
 });
 
