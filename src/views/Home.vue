@@ -5,8 +5,10 @@
         name="slide-in-left"
         appear
         v-if="showBgTrans"
-        @afterEnter="showTitleTrans = true"
+        @beforeEnter="disableHorizontalScroll"
+        @afterEnter="showTitleTrans = true; enableHorizontalScroll()"
         @beforeLeave="beforeLeave"
+        @afterLeave="enableHorizontalScroll"
         @leave="onLeave"
         :leave-to-class="!colorToggled ? 'slide-in-left-leave-to' : ''"
       >
@@ -88,6 +90,7 @@ export default class Home extends Vue {
   };
 
   beforeLeave() {
+    this.disableHorizontalScroll();
     this.setBgZIndex();
     this.showTitleTrans = false;
     this.$emit('showMenuTrans', false);
@@ -114,6 +117,14 @@ export default class Home extends Vue {
     const bg: HTMLElement = this.colorToggled ? this.$refs.bgRight : this.$refs.bgLeft;
     bg.style.zIndex = '1';
   }
+
+  disableHorizontalScroll = () => {
+    document.documentElement.style.overflowX = 'hidden';
+  };
+
+  enableHorizontalScroll = () => {
+    document.documentElement.style.overflowX = 'auto';
+  };
 }
 </script>
 

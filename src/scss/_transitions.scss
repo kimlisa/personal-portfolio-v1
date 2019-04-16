@@ -7,13 +7,13 @@
 }
 
 .slide-in-right-leave-to {
-  -webkit-transform: scaleX(10);
+  //-webkit-transform: scaleX(10);
   transform: scaleX(10);
   //transform-origin: top right;
 }
 
 .slide-in-left-leave-to {
-  -webkit-transform: scaleX(10);
+  //-webkit-transform: scaleX(10);
   transform: scaleX(10);
   //transform-origin: top left;
 }
