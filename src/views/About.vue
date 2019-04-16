@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about" v-show="showContent">
     <Cover
       title="about"
       subtitle="me, her, she"
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import Cover from '@/components/SubPageCover.vue';
 import Bio from '@/components/AboutBio.vue';
 import Skills from '@/components/AboutSkills.vue';
@@ -25,7 +25,9 @@ import Fact from '@/components/AboutFact.vue';
     Fact,
   },
 })
-export default class About extends Vue {}
+export default class About extends Vue {
+  @Prop(Boolean) readonly showContent!: boolean
+}
 </script>
 
 <style lang="scss" scoped>

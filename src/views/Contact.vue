@@ -1,5 +1,5 @@
 <template>
-  <div class="contact">
+  <div class="contact" v-show="showContent">
     <Cover
       title="contact"
       subtitle="get in touch"
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import Cover from '@/components/SubPageCover.vue';
 import ContactSection from '@/components/ContactSection.vue';
 
@@ -19,7 +19,9 @@ import ContactSection from '@/components/ContactSection.vue';
     ContactSection,
   },
 })
-export default class Contact extends Vue {}
+export default class Contact extends Vue {
+  @Prop(Boolean) readonly showContent!: boolean
+}
 </script>
 
 <style lang="scss" scoped>

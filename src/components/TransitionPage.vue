@@ -2,7 +2,7 @@
   <transition
     :name="transitionName"
     :mode="transitionMode"
-    @beforeLeave="afterLeave"
+    @beforeLeave="beforeLeave"
     @beforeEnter="beforeEnter"
   >
     <slot/>
@@ -37,19 +37,19 @@ export default class Menu extends Vue {
     this.$router.beforeEach((to, from, next) => {
       if (to.name === MenuName.HOME) {
         this.$emit('showMenuTrans', false);
-        this.transitionName = '';
-        next();
+        this.$emit('showContent', false);
+        setTimeout(() => { next(); }, 300);
       } else if (from.name === MenuName.HOME) {
         this.$emit('leaveHomeStart');
+        this.$emit('showContent', true);
         this.nextHolder = next;
       } else {
-        this.transitionName = 'fade';
         next();
       }
     });
   }
 
-  afterLeave() {
+  beforeLeave() {
     if (this.$route.name !== 'home') return;
     this.$emit('resetHome');
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="projects">
+  <div class="projects" v-show="showContent">
     <Cover
       title="projects"
       subtitle="some things i've built"
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import Cover from '@/components/SubPageCover.vue';
 import ProjectFeatured from '@/components/ProjectFeatured.vue';
 import ProjectOthers from '@/components/ProjectOthers.vue';
@@ -22,7 +22,9 @@ import ProjectOthers from '@/components/ProjectOthers.vue';
     ProjectOthers,
   },
 })
-export default class Projects extends Vue {}
+export default class Projects extends Vue {
+  @Prop(Boolean) readonly showContent!: boolean
+}
 </script>
 
 <style lang="scss" scoped>

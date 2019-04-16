@@ -34,6 +34,7 @@
         @showMenuTrans="showMenuTrans = $event"
         @leaveHomeStart="leaveHomeStart = true"
         @resetHome="leaveHomeFinalize = false; leaveHomeStart = false"
+        @showContent="contentShow = $event"
         :leaveHomeFinalize="leaveHomeFinalize"
       >
         <keep-alive exclude="Home">
@@ -43,6 +44,7 @@
             @leaveHomeFinalize="leaveHomeFinalize = $event"
             :colorToggled="colorToggled"
             :leaveHome="leaveHomeStart"
+            :showContent="contentShow"
           />
         </keep-alive>
       </TransitionPage>
@@ -89,6 +91,8 @@ export default class App extends Vue {
   leaveHomeStart: boolean = false;
 
   goHomeStart: boolean = false;
+
+  contentShow: boolean = true;
 
   // https://github.com/vuejs/vue-class-component#undefined-will-not-be-reactive
   // 'undefined as any' bypasses type checking
