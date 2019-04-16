@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="app"
     id="app"
     :class="[
       $route.name === $_static.HOME ? 'app--home' : 'app--subpage',
@@ -19,21 +20,29 @@
         @color-toggled="colorToggled = $event"
       />
     </aside>
-    <transition name="fade-in-top">
-      <nav class="app__nav" v-if="showMenuTrans">
-        <Menu
-          :mobileMenu="mobileMenu"
-          :colorToggled="colorToggled"
-        />
+      <nav class="app__nav" id="nav">
+        <transition name="fade-in-top">
+          <Menu
+            :mobileMenu="mobileMenu"
+            :colorToggled="colorToggled"
+            v-show="showMenuTrans"
+          />
+        </transition>
       </nav>
-    </transition>
     <main class="app__content">
-      <TransitionPage>
-        <keep-alive>
+      <TransitionPage
+        @showMenuTrans="showMenuTrans = $event"
+        @leaveHomeStart="leaveHomeStart = true"
+        @resetHome="leaveHomeFinalize = false; leaveHomeStart = false"
+        :leaveHomeFinalize="leaveHomeFinalize"
+      >
+        <keep-alive exclude="Home">
           <router-view
             @color-toggled="colorToggled = $event"
-            @showMenuTrans="showMenuTrans = true"
+            @showMenuTrans="showMenuTrans = $event"
+            @leaveHomeFinalize="leaveHomeFinalize = $event"
             :colorToggled="colorToggled"
+            :leaveHome="leaveHomeStart"
           />
         </keep-alive>
       </TransitionPage>
@@ -52,6 +61,12 @@ import BtnColorToggler from '@/components/BtnColorToggler.vue';
 import SocialMediaIcons from '@/components/SocialMediaIcons.vue';
 import TransitionPage from '@/components/TransitionPage.vue';
 
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteUpdate',
+  'beforeRouteLeave',
+]);
+
 @Component({
   components: {
     Menu,
@@ -69,6 +84,12 @@ export default class App extends Vue {
 
   showMenuTrans: boolean = false;
 
+  leaveHomeFinalize: boolean = false;
+
+  leaveHomeStart: boolean = false;
+
+  goHomeStart: boolean = false;
+
   // https://github.com/vuejs/vue-class-component#undefined-will-not-be-reactive
   // 'undefined as any' bypasses type checking
   private $_static: IMenuName = undefined as any; // eslint-disable-line camelcase
@@ -84,7 +105,9 @@ export default class App extends Vue {
   created() {
     this.$_static = MenuName;
 
-
+    if (this.$route.name !== this.$_static.HOME) {
+      this.showMenuTrans = true;
+    }
 
     // load users bg color preference if any
     const userPreference: Storage = window.localStorage;
@@ -152,6 +175,7 @@ export default class App extends Vue {
 <style lang="scss">
 @import 'scss/theme-light';
 @import 'scss/theme-dark';
+@import 'scss/transitions';
 
 %shared-home-bg {
   position: absolute;
@@ -170,20 +194,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
-
-  /* supposedly a trick to make browser accelerate graphics
-   * fixes, some texts appearing blurry in safari
-   */
-
-  /* -webkit-transform: translate3d(0, 0, 1px);
-  -moz-transform: translate3d(0, 0, 1px);
-  -ms-transform: translate3d(0, 0, 1px);
-  -o-transform: translate3d(0, 0, 1px);
-  transform: translate3d(0, 0, 1px); */
-
-  /* Enable hardware acceleration to fix laggy transitions */
-
-  /* transform: translateZ(0); */
 }
 
 body {
@@ -191,6 +201,7 @@ body {
   padding: 0;
   margin: 0;
   color: #2c3e50;
+  transition: 0.2s;
 }
 
 .body--dark {
@@ -378,6 +389,10 @@ textarea {
   }
 }
 
+.app-desktop.app--home .app__nav {
+  height: 1.625em;
+}
+
 .app-desktop.app--subpage {
   /* transition: 1s ease; */
 
@@ -413,6 +428,7 @@ textarea {
   } */
 }
 
+
 .app--subpage {
   $app--subpage: &;
 
@@ -420,6 +436,7 @@ textarea {
   transition: $transition-bg-toggle;
 
   .app__content {
+    min-height: 100vh;
     padding: 0 5.5em;
 
     @media screen and (max-width: 59.875em) {
@@ -475,18 +492,4 @@ footer p {
   box-shadow: none;
   transition: 0.15s ease-out;
 }
-
-.fade-in-top-enter {
-  opacity: 0;
-  transform: translateY(-100%);
-}
-.fade-in-top-enter-active,
-.fade-in-top-leave-active {
-  transition: 0.5s;
-}
-
-.fade-in-top-leave-to {
-  transform: translateY(100%);
-}
-
 </style>

@@ -23,12 +23,12 @@
     >
       <div class="menu__nav" @click="closeMenu">
         <div class="menu__nav__left">
-          <router-link :to="{ name: $_static.HOME }">home</router-link>
-          <router-link :to="{ name: $_static.PROJECTS }">projects</router-link>
+          <router-link :to="{ name: $_static.HOME }" exact>home</router-link>
+          <router-link :to="{ name: $_static.PROJECTS }" exact>projects</router-link>
         </div>
         <div class="menu__nav__right">
-          <router-link :to="{ name: $_static.ABOUT }">about</router-link>
-          <router-link :to="{ name: $_static.CONTACT }">contact</router-link>
+          <router-link :to="{ name: $_static.ABOUT }" exact>about</router-link>
+          <router-link :to="{ name: $_static.CONTACT }" exact>contact</router-link>
         </div>
         <!-- Mobile Menu Only Extra Links -->
         <div class="menu__nav__mobile" v-show="mobileMenu">
@@ -68,26 +68,27 @@ export default class Menu extends Vue {
 
   hideMenu: boolean = false;
 
-  // static data
-  private $_static: IMenuName = undefined as any; // eslint-disable-line camelcase
+  // static non reactive data
+  /* eslint-disable camelcase */
+  private $_static: IMenuName = undefined as any;
 
-  private $_previousScrollPosition: number = undefined as any; // eslint-disable-line camelcase
+  private $_previousScrollPosition: number = undefined as any;
 
-  private $_scrolling: boolean = undefined as any; // eslint-disable-line camelcase
+  private $_scrolling: boolean = undefined as any;
 
-  private $_showNav: boolean = undefined as any; // eslint-disable-line camelcase
+  private $_showNav: boolean = undefined as any;
 
-  private $_showBoxShadow: boolean = undefined as any; // eslint-disable-line camelcase
+  private $_showBoxShadow: boolean = undefined as any;
 
-  private $_menuElement: HTMLElement = undefined as any; // eslint-disable-line camelcase
+  private $_menuElement: HTMLElement = undefined as any;
 
-  private $_scrollHeight: number = undefined as any; // eslint-disable-line camelcase
+  private $_scrollHeight: number = undefined as any;
 
   @Watch('$route')
   onRouteChange() {
-    if (this.$route.name !== this.$_static.HOME) return;
-
+    // if (this.$route.name === this.$_static.HOME) return;
     this.scrolled = false;
+    this.hideMenu = false;
   }
 
   created() {

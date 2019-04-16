@@ -1,39 +1,60 @@
 <template>
-  <div class="home">
+  <div class="home" ref="home">
     <div class="home__bg">
-      <transition name="slide-in-left" appear @afterEnter="afterShowTitle">
-        <div class="home__bg__left"></div>
+      <transition
+        name="slide-in-left"
+        appear
+        v-if="showBgTrans"
+        @afterEnter="showTitleTrans = true"
+        @beforeLeave="beforeLeave"
+        @leave="onLeave"
+        :leave-to-class="!colorToggled ? 'slide-in-left-leave-to' : ''"
+      >
+        <div class="home__bg__left" ref="bgLeft"></div>
       </transition>
-      <transition name="slide-in-right" appear>
-        <div class="home__bg__right"></div>
+      <transition
+        name="slide-in-right"
+        appear
+        v-if="showBgTrans"
+        :leave-to-class="colorToggled ? 'slide-in-right-leave-to' : ''"
+      >
+        <div class="home__bg__right" ref="bgRight"></div>
       </transition>
     </div>
     <div class="home__title">
-      <transition name="slide-in-top" @afterEnter="afterShowButtonMenu">
-        <div class="home__title__left" v-if="showTitleTrans">
+      <transition
+        name="fade-in-top"
+        @afterEnter="afterShowButtonMenu"
+      >
+        <div
+          class="home__title__left"
+          v-if="showTitleTrans"
+        >
           <h1>LISA</h1>
           <h2>Software</h2>
         </div>
       </transition>
-      <transition name="slide-in-bottom">
+      <transition name="fade-in-bottom">
         <div class="home__title__right" v-if="showTitleTrans">
           <h1><span class="home__title__spacer">&nbsp;</span>KIM</h1>
           <h2>Engineer</h2>
         </div>
       </transition>
     </div>
-    <transition name="fade-in-bottom">
-      <HoverPopover
-        :content="'Toggles sub-pages bg-color'"
-        class="color-toggler"
-      >
-        <BtnColorToggler
-          v-if="showTogglerTrans"
-          :smallBtn="false"
-          :toggleState="colorToggled"
-          @color-toggled="$emit('color-toggled', $event)"/>
-      </HoverPopover>
-    </transition>
+      <div class="color-toggler__wrapper">
+        <transition name="fade">
+          <HoverPopover
+            :content="'Toggles sub-pages bg-color'"
+            v-if="showTogglerTrans"
+          >
+            <BtnColorToggler
+              :smallBtn="false"
+              :toggleState="colorToggled"
+              @color-toggled="$emit('color-toggled', $event)"
+            />
+          </HoverPopover>
+        </transition>
+      </div>
   </div>
 </template>
 
@@ -51,25 +72,52 @@ import BtnColorToggler from '@/components/BtnColorToggler.vue';
 export default class Home extends Vue {
   @Prop(Boolean) readonly colorToggled!: boolean;
 
+  @Prop(Boolean) readonly leaveHome!: boolean;
+
   showTitleTrans: boolean = false;
 
   showTogglerTrans: boolean = false;
 
-  afterShowTitle() {
-    this.showTitleTrans = true;
+  get showBgTrans() {
+    return this.$route.name === 'home' && !this.leaveHome;
+  }
+
+  $refs!: {
+    bgLeft: HTMLElement,
+    bgRight: HTMLElement,
+  };
+
+  beforeLeave() {
+    this.setBgZIndex();
+    this.showTitleTrans = false;
+    this.$emit('showMenuTrans', false);
+    this.showTogglerTrans = false;
+  }
+
+  onLeave() {
+    // alternative to afterLeave transition state
+    // latter causes flicker at end of afterLeave state
+    setTimeout(() => { this.$emit('leaveHomeFinalize', true); }, 300);
   }
 
   afterShowButtonMenu() {
-    this.showTogglerTrans = true;
-    this.$emit('showMenuTrans');
+    this.$emit('showMenuTrans', true);
+    setTimeout(() => { this.showTogglerTrans = true; }, 200);
+  }
+
+  setBgZIndex() {
+    // reset
+    this.$refs.bgRight.style.zIndex = '0';
+    this.$refs.bgLeft.style.zIndex = '0';
+
+    // set
+    const bg: HTMLElement = this.colorToggled ? this.$refs.bgRight : this.$refs.bgLeft;
+    bg.style.zIndex = '1';
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.home {
-}
-
 .home__bg {
   position: absolute;
   top: 0;
@@ -77,18 +125,20 @@ export default class Home extends Vue {
   display: flex;
   width: 100%;
   height: 100vh;
-  background: #e1e1e1;
+  will-change: transform;
 
   &__left {
     width: 50%;
     height: 100vh;
     background-color: $color-toggle-light-bg;
+    will-change: transform;
   }
 
   &__right {
     width: 50%;
     height: 100vh;
     background-color: $color-toggle-dark-bg;
+    will-change: transform;
   }
 }
 
@@ -102,8 +152,9 @@ export default class Home extends Vue {
   word-spacing: 0.268em;
 }
 
-.color-toggler {
+.color-toggler__wrapper {
   margin-top: 2rem;
+  height: 2.125em;
 }
 
 h1 {
@@ -179,52 +230,4 @@ h2 {
     justify-content: flex-start;
   }
 }
-
-.slide-in-left-enter,
-.slide-in-right-enter,
-.slide-in-top-enter,
-.slide-in-bottom-enter,
-.fade-in-bottom-enter {
-  opacity: 0;
-}
-
-.slide-in-left-enter,
-.slide-in-right-leave-to {
-  transform: translateX(-100%);
-}
-
-.slide-in-left-leave-to,
-.slide-in-right-enter {
-  transform: translateX(100%);
-}
-
-.slide-in-left-enter-active,
-.slide-in-left-leave-active,
-.slide-in-right-enter-active,
-.slide-in-right-leave-active {
-  transition: 0.5s ease-out;
-}
-
-.slide-in-top-enter,
-.slide-in-bottom-leave-to,
-.fade-in-bottom-leave-to {
-  transform: translateY(-100%);
-}
-
-.slide-in-bottom-enter,
-.slide-in-top-leave-to,
-.fade-in-bottom-enter {
-  transform: translateY(100%);
-}
-
-
-.slide-in-top-enter-active,
-.slide-in-top-leave-active,
-.slide-in-bottom-enter-active,
-.slide-in-bottom-leave-active {
-  transition: 0.5s ease-out;
-}
-
-
-
 </style>

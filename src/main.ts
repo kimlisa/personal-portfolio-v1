@@ -8,7 +8,6 @@ import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from './App.vue';
 import router from './router';
-import SubpageSection from '@/components/SubPageSection.vue';
 
 // cherry pick font awesome
 library.add(faSun, faMoon, faFileWord, faUser, faComment, faThumbsUp, faExclamationTriangle,

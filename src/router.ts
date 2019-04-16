@@ -42,9 +42,12 @@ const router = new Router({
 
 // removes flashing to top before transitioning caused by scrollTop
 router.beforeEach((to, from, next) => {
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-  }, 300);
+  if ((window.scrollX !== 0 || window.scrollY !== 0) && to.name !== MenuName.HOME) {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 300);
+  }
+
   next();
 });
 
