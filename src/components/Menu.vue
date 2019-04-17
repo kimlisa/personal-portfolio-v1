@@ -16,13 +16,20 @@
       class="btn btn--menu"
       @click="toggleMobileNav"
     >menu</button>
-    <transition :name="mobileMenu ? 'slide-in-right' : ''">
+    <transition :name="mobileMenu ? 'slide-in-right': ''">
       <div
         class="menu__nav-wrapper"
+        ref="navWrapper"
         :class="mobileMenu && showMobileNav ? 'no-behind-scroll' : ''"
         v-show="!mobileMenu || mobileMenu && showMobileNav"
       >
-        <div class="menu__nav" @click="closeMenu">
+        <BtnColorToggler
+          v-show="mobileMenu"
+          :toggleState="colorToggled"
+          :flatDesign="true"
+          @color-toggled="$emit('color-toggled', $event)"
+        />
+        <div class="menu__nav">
           <div class="menu__nav__left">
             <router-link :to="{ name: $_static.HOME }" exact>home</router-link>
             <router-link :to="{ name: $_static.PROJECTS }" exact>projects</router-link>
@@ -51,10 +58,12 @@ import {
 } from 'vue-property-decorator';
 import { IMenuName, MenuName } from '@/consts/consts';
 import SocialMediaIcons from './SocialMediaIcons.vue';
+import BtnColorToggler from '@/components/BtnColorToggler.vue';
 
 @Component({
   components: {
     SocialMediaIcons,
+    BtnColorToggler,
   },
 })
 export default class Menu extends Vue {
@@ -86,13 +95,16 @@ export default class Menu extends Vue {
 
   private $_scrollHeight: number = undefined as any;
 
-  @Watch('$route')
-  onRouteChange() {
-    // if (this.$route.name === this.$_static.HOME) return;
-    console.log('on route change')
-    this.scrolled = false;
-    this.hideMenu = false;
-  }
+  // @Watch('$route')
+  // onRouteChange() {
+  //   // if (this.$route.name === this.$_static.HOME) return;
+  //   console.log('on route change')
+  //   if (this.showMobileNav) {
+  //     this.toggleMobileNav();
+  //   }
+  //   this.scrolled = false;
+  //   this.hideMenu = false;
+  // }
 
   created() {
     this.$_static = MenuName;
@@ -103,6 +115,19 @@ export default class Menu extends Vue {
     this.$_scrollHeight = 34;
 
     window.addEventListener('scroll', this.menuScrollListener);
+
+    this.$router.beforeEach((to, from, next) => {
+      console.log('hello hello hello');
+      if (this.showMobileNav) {
+        this.toggleMobileNav();
+      }
+      this.scrolled = false;
+      this.hideMenu = false;
+
+      this.$nextTick(() => {
+        next();
+      });
+    });
   }
 
   mounted() {
@@ -124,8 +149,8 @@ export default class Menu extends Vue {
     if (this.showMobileNav) {
       bodyEl.style.overflow = 'hidden';
       htmlEl.style.overflow = 'hidden';
-      bodyEl.scrollTop = 0;
-      htmlEl.scrollTop = 0;
+      // bodyEl.scrollTop = 0;
+      // htmlEl.scrollTop = 0;
     } else {
       bodyEl.style.overflow = 'auto';
       htmlEl.style.overflow = 'auto';
@@ -274,6 +299,7 @@ $color-white: #fff;
   overflow: hidden;
 }
 
+
 /*
 * Mobile styling
 */
@@ -313,7 +339,7 @@ $color-white: #fff;
 }
 
 .menu--mobile .menu__nav-wrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -336,6 +362,11 @@ $color-white: #fff;
       background-color: $color-white;
     }
   }
+
+  ::v-deep .btn--2D {
+    top: 1.15em;
+    left: 1.35em;
+  }
 }
 
 .menu--mobile .menu__nav {
@@ -343,7 +374,7 @@ $color-white: #fff;
   width: 100%;
   max-width: 9.688rem;
   padding-left: 2.813rem;
-  margin: 5rem 1.875rem 3.75rem 1.875rem;
+  margin: 4rem 1.875rem 3.75rem 1.875rem;
   border-left: 1px solid #4e4e4e;
 
   a {

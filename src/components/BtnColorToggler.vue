@@ -4,7 +4,8 @@
     class="btn-color-toggler"
     :class="[
       btnToggled ? 'toggled-moon' : 'toggled-sun',
-      smallBtn ? 'btn--small' : 'btn--default'
+      smallBtn ? 'btn--small' : 'btn--default',
+      flatDesign ? 'btn--2D' : ''
     ]"
     @click="toggleButton"
   >
@@ -22,6 +23,8 @@ export default class BtnColorToggler extends Vue {
   @Prop(Boolean) readonly toggleState!: boolean;
 
   @Prop(Boolean) readonly smallBtn!: boolean;
+
+  @Prop(Boolean) readonly flatDesign!: boolean;
 
   btnToggled: boolean = this.toggleState;
 
@@ -126,6 +129,37 @@ $spacing-toggle-icon: 0.34rem;
     right: 0;
     left: 53%;
     background-image: linear-gradient(#a7a7a7, #404040);
+  }
+}
+
+.btn--2D {
+  width: 5.2rem;
+  height: 2.6rem;
+  font-size: 1.5rem;
+
+  svg {
+    padding-top: 0.1rem;
+  }
+
+  &::after {
+    top: 0.1rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    content: '';
+    background: #8c8c8c;
+    box-shadow: none;
+  }
+
+  &.toggled-sun::after {
+    right: 53%;
+    left: 0.1rem;
+    background-image: none;
+  }
+
+  &.toggled-moon::after {
+    right: 0;
+    left: 54%;
+    background-image: none;
   }
 }
 

@@ -47,6 +47,7 @@ export default class Menu extends Vue {
   }
 
   toggleCoverOpacity() {
+    console.log("am i firing")
     if (window.scrollY === 0) return;
     const cover = this.$_coverElement.getBoundingClientRect();
     const currRectDiff = cover.bottom + cover.top;
@@ -97,6 +98,13 @@ h2 {
   height: 100vh;
   margin-top: -4.5em;
   transition: opacity 0.65s linear;
+
+  @media screen and (max-width: 37.5em) {
+    margin-top: -2em;
+    margin-bottom: 2em;
+  }
 }
+
+
 
 </style>

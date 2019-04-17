@@ -7,15 +7,20 @@
 }
 
 .slide-in-right-leave-to {
-  //-webkit-transform: scaleX(10);
   transform: scaleX(10);
+  //-webkit-transform-style: preserve-3d;
+  //-webkit-backface-visibility: hidden;
+  //-webkit-transform: translate3d(0, 0, 0);
   //transform-origin: top right;
 }
 
 .slide-in-left-leave-to {
   //-webkit-transform: scaleX(10);
-  transform: scaleX(10);
+  transform: scaleX(5);
   //transform-origin: top left;
+  //-webkit-transform-style: preserve-3d;
+  //-webkit-transform: translate3d(0, 0, 0);
+  //-webkit-backface-visibility: hidden;
 }
 
 .slide-in-left-enter-active,

@@ -136,20 +136,23 @@ export default class Home extends Vue {
   display: flex;
   width: 100%;
   height: 100vh;
-  will-change: transform;
+
+  /* will-change: transform; */
 
   &__left {
     width: 50%;
     height: 100vh;
     background-color: $color-toggle-light-bg;
-    will-change: transform;
+
+    /* will-change: transform; */
   }
 
   &__right {
     width: 50%;
     height: 100vh;
     background-color: $color-toggle-dark-bg;
-    will-change: transform;
+
+    /* will-change: transform; */
   }
 }
 
@@ -157,6 +160,10 @@ export default class Home extends Vue {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 37.5em) {
+    margin-top: -3em;
+  }
 }
 
 .home__title__spacer {
@@ -164,8 +171,8 @@ export default class Home extends Vue {
 }
 
 .color-toggler__wrapper {
-  margin-top: 2rem;
   height: 2.125em;
+  margin-top: 2rem;
 }
 
 h1 {

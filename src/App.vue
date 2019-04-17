@@ -20,11 +20,12 @@
         @color-toggled="colorToggled = $event"
       />
     </aside>
-      <nav class="app__nav" id="nav">
+      <nav class="app__nav">
         <transition name="fade-in-top">
           <Menu
             :mobileMenu="mobileMenu"
             :colorToggled="colorToggled"
+            @color-toggled="colorToggled = $event"
             v-show="showMenuTrans"
           />
         </transition>
@@ -393,7 +394,7 @@ textarea {
   }
 }
 
-.app-desktop.app--home .app__nav {
+.mobile .app-desktop.app--home .app__nav {
   height: 1.625em;
 }
 

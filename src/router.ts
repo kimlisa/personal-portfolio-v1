@@ -42,8 +42,8 @@ const router = new Router({
 
 // removes flashing to top before transitioning caused by scrollTop
 router.beforeEach((to, from, next) => {
-  // prevent the browser's default behavior
-  // to avoid page jumping flicker
+  // prevent the browser's default behavior (saved scroll position)
+  // removes page jumping to top or bottom flicker before route change
   if ('scrollRestoration' in window.history) { window.history.scrollRestoration = 'manual'; }
 
   // for any back, foward, navigation, always scroll to top
