@@ -20,20 +20,21 @@ export default class Menu extends Vue {
 
   @Prop(String) readonly subtitle!: string;
 
-  // reactive states
-  showCover: boolean = true;
-
   // static states
   private $_coverElement: HTMLElement = undefined as any; // eslint-disable-line camelcase
 
   private $_coverRectDiff: number = undefined as any; // eslint-disable-line camelcase
 
-  @Watch('$route')
-  onRouteChange() {
+  // lifecycle hooks
+  activated() {
     this.$_coverElement.style.opacity = '1';
+    window.addEventListener('scroll', this.toggleCoverOpacity);
   }
 
-  // lifecycle hooks
+  deactivated() {
+    window.removeEventListener('scroll', this.toggleCoverOpacity);
+  }
+
   mounted() {
     this.$_coverElement = this.$refs.cover as HTMLElement;
     this.$_coverRectDiff = 170;
@@ -46,7 +47,6 @@ export default class Menu extends Vue {
   }
 
   toggleCoverOpacity() {
-
     if (window.scrollY === 0) return;
     const cover = this.$_coverElement.getBoundingClientRect();
     const currRectDiff = cover.bottom + cover.top;

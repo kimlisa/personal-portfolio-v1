@@ -16,30 +16,32 @@
       class="btn btn--menu"
       @click="toggleMobileNav"
     >menu</button>
-    <div
-      class="menu__nav-wrapper"
-      :class="mobileMenu && showMobileNav ? 'no-behind-scroll' : ''"
-      v-show="!mobileMenu || mobileMenu && showMobileNav"
-    >
-      <div class="menu__nav" @click="closeMenu">
-        <div class="menu__nav__left">
-          <router-link :to="{ name: $_static.HOME }" exact>home</router-link>
-          <router-link :to="{ name: $_static.PROJECTS }" exact>projects</router-link>
+    <transition :name="mobileMenu ? 'slide-in-right' : ''">
+      <div
+        class="menu__nav-wrapper"
+        :class="mobileMenu && showMobileNav ? 'no-behind-scroll' : ''"
+        v-show="!mobileMenu || mobileMenu && showMobileNav"
+      >
+        <div class="menu__nav" @click="closeMenu">
+          <div class="menu__nav__left">
+            <router-link :to="{ name: $_static.HOME }" exact>home</router-link>
+            <router-link :to="{ name: $_static.PROJECTS }" exact>projects</router-link>
+          </div>
+          <div class="menu__nav__right">
+            <router-link :to="{ name: $_static.ABOUT }" exact>about</router-link>
+            <router-link :to="{ name: $_static.CONTACT }" exact>contact</router-link>
+          </div>
+          <!-- Mobile Menu Only Extra Links -->
+          <div class="menu__nav__mobile" v-show="mobileMenu">
+            <div
+              class="menu__nav__mobile__close-btn"
+              @click="toggleMobileNav"
+            ></div>
+            <SocialMediaIcons :resumeText="true"/>
+          </div>
         </div>
-        <div class="menu__nav__right">
-          <router-link :to="{ name: $_static.ABOUT }" exact>about</router-link>
-          <router-link :to="{ name: $_static.CONTACT }" exact>contact</router-link>
-        </div>
-        <!-- Mobile Menu Only Extra Links -->
-        <div class="menu__nav__mobile" v-show="mobileMenu">
-          <div
-            class="menu__nav__mobile__close-btn"
-            @click="toggleMobileNav"
-          ></div>
-          <SocialMediaIcons :resumeText="true"/>
-        </div>
-      </div>
-    </div> <!-- menu__nav-wrapper -->
+      </div> <!-- menu__nav-wrapper -->
+    </transition>
   </div>
 </template>
 
@@ -87,6 +89,7 @@ export default class Menu extends Vue {
   @Watch('$route')
   onRouteChange() {
     // if (this.$route.name === this.$_static.HOME) return;
+    console.log('on route change')
     this.scrolled = false;
     this.hideMenu = false;
   }
@@ -305,7 +308,7 @@ $color-white: #fff;
   box-shadow: 0 0.188rem 0.313rem 0.063rem rgba(0, 0, 0, 0.22);
 
   &:hover {
-    background: #42b983;
+    background: $color-h4;
   }
 }
 
@@ -470,5 +473,14 @@ $color-white: #fff;
       color: #5d5d5d;
     }
   }
+}
+
+.slide-in-right-enter-active,
+.slide-in-right-leave-active {
+  transition: 0.3s;
+}
+
+.slide-in-right-leave-to {
+  transform: translateX(100%);
 }
 </style>

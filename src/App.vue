@@ -281,7 +281,7 @@ h3 {
 
 h4 {
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 0.1em;
   font-size: 2em;
 
   @media screen and (max-width: 35em) {

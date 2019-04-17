@@ -1,5 +1,5 @@
 <template functional>
-  <section class="about-bio">
+  <section class="about-bio" :key="aboutBio">
     <h3>who i am</h3>
     <div class="about-bio__container">
       <div class="about-bio__container__left">

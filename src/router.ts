@@ -42,11 +42,12 @@ const router = new Router({
 
 // removes flashing to top before transitioning caused by scrollTop
 router.beforeEach((to, from, next) => {
-  if ((window.scrollX !== 0 || window.scrollY !== 0) && to.name !== MenuName.HOME) {
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 300);
-  }
+  // prevent the browser's default behavior
+  // to avoid page jumping flicker
+  if ('scrollRestoration' in window.history) { window.history.scrollRestoration = 'manual'; }
+
+  // for any back, foward, navigation, always scroll to top
+  window.scrollTo(0, 0);
 
   next();
 });
