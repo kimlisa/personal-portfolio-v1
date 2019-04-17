@@ -47,7 +47,6 @@ export default class Menu extends Vue {
   }
 
   toggleCoverOpacity() {
-    console.log("am i firing")
     if (window.scrollY === 0) return;
     const cover = this.$_coverElement.getBoundingClientRect();
     const currRectDiff = cover.bottom + cover.top;
@@ -104,7 +103,4 @@ h2 {
     margin-bottom: 2em;
   }
 }
-
-
-
 </style>

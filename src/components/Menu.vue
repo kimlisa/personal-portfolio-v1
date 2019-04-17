@@ -23,12 +23,13 @@
         :class="mobileMenu && showMobileNav ? 'no-behind-scroll' : ''"
         v-show="!mobileMenu || mobileMenu && showMobileNav"
       >
-        <BtnColorToggler
-          v-show="mobileMenu"
-          :toggleState="colorToggled"
-          :flatDesign="true"
-          @color-toggled="$emit('color-toggled', $event)"
-        />
+        <div class="menu__colorToggler" v-show="$route.name !== $_static.HOME">
+          <BtnColorToggler
+            :toggleState="colorToggled"
+            :flatDesign="true"
+            @color-toggled="$emit('color-toggled', $event)"
+          />
+        </div>
         <div class="menu__nav">
           <div class="menu__nav__left">
             <router-link :to="{ name: $_static.HOME }" exact>home</router-link>
@@ -95,17 +96,6 @@ export default class Menu extends Vue {
 
   private $_scrollHeight: number = undefined as any;
 
-  // @Watch('$route')
-  // onRouteChange() {
-  //   // if (this.$route.name === this.$_static.HOME) return;
-  //   console.log('on route change')
-  //   if (this.showMobileNav) {
-  //     this.toggleMobileNav();
-  //   }
-  //   this.scrolled = false;
-  //   this.hideMenu = false;
-  // }
-
   created() {
     this.$_static = MenuName;
     this.$_previousScrollPosition = 0;
@@ -117,7 +107,6 @@ export default class Menu extends Vue {
     window.addEventListener('scroll', this.menuScrollListener);
 
     this.$router.beforeEach((to, from, next) => {
-      console.log('hello hello hello');
       if (this.showMobileNav) {
         this.toggleMobileNav();
       }
@@ -145,7 +134,7 @@ export default class Menu extends Vue {
     const bodyEl: HTMLElement = document.body as HTMLElement;
     const htmlEl: HTMLElement = document.documentElement as HTMLElement;
 
-    // prevent body scrolling
+    // prevent body scrolling while menu is opened
     if (this.showMobileNav) {
       bodyEl.style.overflow = 'hidden';
       htmlEl.style.overflow = 'hidden';
@@ -299,7 +288,6 @@ $color-white: #fff;
   overflow: hidden;
 }
 
-
 /*
 * Mobile styling
 */
@@ -362,10 +350,36 @@ $color-white: #fff;
       background-color: $color-white;
     }
   }
+}
+
+.menu__colorToggler {
+  position: absolute;
+  top: 0.7em;
+  right: 2em;
+
+  @media screen and (max-width: 37.5em) {
+    position: relative;
+    top: 0;
+    right: 0;
+  }
 
   ::v-deep .btn--2D {
-    top: 1.15em;
-    left: 1.35em;
+    display: none;
+
+    &::after {
+      background-color: #6e6e6e;
+    }
+
+    @media screen and (max-width: 59.875em) {
+      display: block;
+      font-size: 1em;
+    }
+
+    @media screen and (max-width: 37.5em) {
+      top: 1em;
+      left: 1.1em;
+      font-size: 1.6em;
+    }
   }
 }
 

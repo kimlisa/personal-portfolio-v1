@@ -4,8 +4,8 @@
     class="btn-color-toggler"
     :class="[
       btnToggled ? 'toggled-moon' : 'toggled-sun',
-      smallBtn ? 'btn--small' : 'btn--default',
-      flatDesign ? 'btn--2D' : ''
+      vertical ? 'btn--vertical' : 'btn--default',
+      flatDesign ? 'btn--2D' : 'btn--3D'
     ]"
     @click="toggleButton"
   >
@@ -22,7 +22,7 @@ import { MenuName } from '@/consts/consts';
 export default class BtnColorToggler extends Vue {
   @Prop(Boolean) readonly toggleState!: boolean;
 
-  @Prop(Boolean) readonly smallBtn!: boolean;
+  @Prop(Boolean) readonly vertical!: boolean;
 
   @Prop(Boolean) readonly flatDesign!: boolean;
 
@@ -68,7 +68,7 @@ export default class BtnColorToggler extends Vue {
 </script>
 
 <style lang="scss" scoped>
-$spacing-toggle-icon: 0.34rem;
+$spacing-toggle-icon: 0.28em;
 
 %shared-toggle-icon {
   position: absolute;
@@ -77,16 +77,16 @@ $spacing-toggle-icon: 0.34rem;
   margin-top: $spacing-toggle-icon;
 }
 
-.btn--default {
+.btn-color-toggler {
   position: relative;
-  width: 4.5rem;
-  height: 2.125rem;
+  width: 3.7em;
+  height: 1.7em;
   padding: 0;
-  font-size: 1.35rem;
+  font-size: 1em;
   color: #a7a7a7;
   background: #d1d1d1;
   border-color: #777;
-  border-radius: 1.875rem;
+  border-radius: 2em;
 
   &:focus {
     outline: none;
@@ -94,14 +94,13 @@ $spacing-toggle-icon: 0.34rem;
 
   &::after {
     position: absolute;
-    top: 0;
+    top: 0.08em;
     display: block;
-    width: 2.063rem;
-    height: 2.063rem;
+    width: 1.44em;
+    height: 1.44em;
     content: '';
-    background: #4d4d4d;
+    background-color: #4d4d4d;
     border-radius: 50%;
-    box-shadow: -0.1rem 0.06rem 0.15rem 0.063rem rgba(0, 0, 0, 0.82);
     transition: all 0.2s ease-in-out;
   }
 
@@ -120,46 +119,47 @@ $spacing-toggle-icon: 0.34rem;
   }
 
   &.toggled-sun::after {
-    right: 53%;
+    right: 0;
+    left: 2%;
+  }
+
+  &.toggled-moon::after {
+    right: 0;
+    left: 58%;
+  }
+}
+
+.btn--3D {
+  width: 3.2em;
+  height: 1.49em;
+  font-size: 1.7em;
+
+  &::after {
+    top: 0;
+    box-shadow: -0.1rem 0.06rem 0.15rem 0.063rem rgba(0, 0, 0, 0.82);
+  }
+
+  .btn-color-toggler__sun,
+  .btn-color-toggler__moon {
+    margin-top: 0.2em;
+  }
+
+  .btn-color-toggler__sun {
+    margin-left: 0.2em;
+  }
+
+  .btn-color-toggler__moon {
+    margin-right: 0.2em;
+  }
+
+  &.toggled-sun::after {
     left: 0;
     background-image: linear-gradient(#b6b6b6, #404040);
   }
 
   &.toggled-moon::after {
-    right: 0;
-    left: 53%;
+    left: 57%;
     background-image: linear-gradient(#a7a7a7, #404040);
-  }
-}
-
-.btn--2D {
-  width: 5.2rem;
-  height: 2.6rem;
-  font-size: 1.5rem;
-
-  svg {
-    padding-top: 0.1rem;
-  }
-
-  &::after {
-    top: 0.1rem;
-    width: 2.25rem;
-    height: 2.25rem;
-    content: '';
-    background: #8c8c8c;
-    box-shadow: none;
-  }
-
-  &.toggled-sun::after {
-    right: 53%;
-    left: 0.1rem;
-    background-image: none;
-  }
-
-  &.toggled-moon::after {
-    right: 0;
-    left: 54%;
-    background-image: none;
   }
 }
 
@@ -169,36 +169,18 @@ $spacing-toggle-icon: 0.34rem;
   transition: 1s ease;
 }
 
-.btn--small {
-  position: relative;
-  padding: 0.36rem 0.32rem;
-  margin-bottom: 1.4em;
-  font-size: 0.9rem;
+.btn--vertical {
+  width: 1.75em;
+  height: 3.7em;
+  margin-bottom: 1.3em;
+  font-size: 0.9em;
   color: #b1b1b1;
-  text-align: center;
-  border-radius: 1rem;
-  box-shadow: none;
+  border-color: silver;
 
   &::after {
-    position: absolute;
-    left: 0.04rem;
-    display: block;
-    width: 1.43rem;
-    height: 1.43rem;
-    content: '';
+    width: 1.5em;
+    height: 1.5em;
     background: #999;
-    border-radius: 50%;
-    transition: all 0.2s ease-in-out;
-  }
-
-  svg {
-    position: relative;
-    z-index: 1;
-    display: block;
-  }
-
-  svg:first-child {
-    margin-bottom: 1rem;
   }
 
   .btn-color-toggler__sun {
@@ -206,17 +188,23 @@ $spacing-toggle-icon: 0.34rem;
   }
 
   .btn-color-toggler__moon {
-    bottom: 0;
+    top: auto;
+    bottom: 0.28em;
   }
 
   &.toggled-sun::after {
-    top: 0.16rem;
+    top: 1%;
+    right: 0;
     bottom: 60%;
+    left: 0.09em;
   }
 
   &.toggled-moon::after {
-    top: 58%;
+    top: 56%;
+    right: 0;
     bottom: 0;
+    left: 0.09em;
   }
 }
+
 </style>

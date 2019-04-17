@@ -15,21 +15,22 @@
     >
       <SocialMediaIcons :resumeText="false"/>
       <BtnColorToggler
-        :smallBtn="true"
+        :vertical="true"
+        :flatDesign="true"
         :toggleState="colorToggled"
         @color-toggled="colorToggled = $event"
       />
     </aside>
-      <nav class="app__nav">
-        <transition name="fade-in-top">
-          <Menu
-            :mobileMenu="mobileMenu"
-            :colorToggled="colorToggled"
-            @color-toggled="colorToggled = $event"
-            v-show="showMenuTrans"
-          />
-        </transition>
-      </nav>
+    <nav class="app__nav">
+      <transition name="fade-in-top">
+        <Menu
+          :mobileMenu="mobileMenu"
+          :colorToggled="colorToggled"
+          @color-toggled="colorToggled = $event"
+          v-show="showMenuTrans"
+        />
+      </transition>
+    </nav>
     <main class="app__content">
       <TransitionPage
         @showMenuTrans="showMenuTrans = $event"
@@ -52,6 +53,7 @@
     </main>
     <footer v-show="$route.name !== $_static.HOME" class="app__footer">
       <p>Designed and Built by Lisa Kim, 2019</p>
+      <SocialMediaIcons class="testtest" :resumtText="false"/>
     </footer>
   </div>
 </template>
@@ -433,7 +435,6 @@ textarea {
   } */
 }
 
-
 .app--subpage {
   $app--subpage: &;
 
@@ -455,9 +456,8 @@ textarea {
 
   &.app--dark {
     .app__sidebar {
-      .btn--small {
+      .btn--vertical {
         background-color: #f4f4f4;
-        border: none;
       }
     }
 
@@ -468,7 +468,7 @@ textarea {
 
   &.app--light {
     .app__sidebar {
-      .btn--small {
+      .btn--vertical {
         background-color: #c0c0c0;
       }
 
@@ -484,11 +484,32 @@ textarea {
   }
 }
 
-footer p {
+.app__footer {
   margin: 6em 0 2em 0;
-  font-size: 0.813rem;
-  font-weight: 400;
-  color: #919191;
+
+  p {
+    font-size: 0.813rem;
+    font-weight: 400;
+    color: #919191;
+  }
+
+  .social-media-icons {
+    display: none;
+
+    a {
+      margin: 0 0.65em;
+      font-size: 1.5em;
+      color: #919191;
+    }
+
+    @media screen and (max-width: 59.875em) {
+      display: block;
+    }
+
+    @media screen and (max-width: 37.5em) {
+      display: none;
+    }
+  }
 }
 
 .btn--big {
