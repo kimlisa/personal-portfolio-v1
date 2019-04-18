@@ -9,17 +9,14 @@ npm run build
 # navigate into the build output directory
 cd dist
 
-# deploying to a custom domain
+# creates CNAME file for custom domain
 echo 'kimlisa.dev' > CNAME
 
 git init
 git add -A
 git commit -m 'deploy'
 
-# if you are deploying to https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
-
-# if you are deploying to https://<USERNAME>.github.io/<REPO>
-# git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+# deploying to gh-pages
+git push -f git@github.com:kimlisa/personal-portfolio-v1.git master:gh-pages
 
 cd -
