@@ -32,7 +32,6 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
-    "git-scripts": "^0.2.1",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
     "stylelint": "^9.10.1",
@@ -42,11 +41,6 @@
     "surge": "^0.20.3",
     "typescript": "^3.2.1",
     "vue-template-compiler": "^2.5.21"
-  },
-  "git": {
-    "scripts": {
-      "pre-push": "surge --project ./dist --domain kimlisa.surge.sh"
-    }
   },
   "postcss": {
     "plugins": {
