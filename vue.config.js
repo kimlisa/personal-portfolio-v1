@@ -1,7 +1,4 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/personal-portfolio-v1/'
-    : '/',
   css: {
     loaderOptions: {
       sass: {
