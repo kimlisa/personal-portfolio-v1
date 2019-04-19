@@ -171,7 +171,7 @@ export default class Home extends Vue {
 }
 
 .color-toggler__wrapper {
-  height: 2.125em;
+  height: 2.5em;
   margin-top: 2rem;
 }
 

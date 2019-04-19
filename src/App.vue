@@ -83,7 +83,7 @@ Component.registerHooks([
 export default class App extends Vue {
   mobileMenu: boolean = false;
 
-  colorToggled: boolean = false;
+  colorToggled: boolean = true;
 
   hideSidebar: boolean = true;
 
@@ -123,11 +123,13 @@ export default class App extends Vue {
       this.colorToggled = colorPreference === 'true';
     }
 
+    this.toggleBodyBg();
+
     window.addEventListener('resize', this.checkViewportSize);
     window.addEventListener('scroll', this.sidebarToggler);
 
     this.checkViewportSize();
-    console.log('app', window.localStorage);
+    // console.log('app', window.localStorage);
   }
 
   beforeDestroy() {
@@ -396,7 +398,7 @@ textarea {
   }
 }
 
-.mobile .app-desktop.app--home .app__nav {
+.app-desktop.app--home .app__nav {
   height: 1.625em;
 }
 
