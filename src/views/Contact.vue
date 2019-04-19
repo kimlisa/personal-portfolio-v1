@@ -45,6 +45,10 @@ export default class Contact extends Vue {
       margin-top: 3em;
       border: 1px dashed rgba(15, 157, 123, 0.35);
       border-radius: 0.5em;
+
+      @media screen and (max-width: 30.313em) {
+        padding: 1em;
+      }
     }
   }
 }

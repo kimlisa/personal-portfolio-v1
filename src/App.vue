@@ -282,6 +282,10 @@ h3 {
   @media screen and (max-width: 35em) {
     font-size: 2.3em;
   }
+
+  @media screen and (max-width: 21.875em) {
+    font-size: 2em;
+  }
 }
 
 h4 {
@@ -296,6 +300,10 @@ h4 {
   @media screen and (max-width: 25em) {
     font-size: 1.3em;
   }
+
+  @media screen and (max-width: 21.875em) {
+    font-size: 1.1em;
+  }
 }
 
 h5 {
@@ -305,6 +313,10 @@ h5 {
 
   @media screen and (max-width: 25em) {
     font-size: 1em;
+  }
+
+  @media screen and (max-width: 21.875em) {
+    font-size: 0.85em;
   }
 }
 

@@ -53,4 +53,16 @@ export default class Projects extends Vue {
   }
 }
 
+@media screen and (max-width: 21.875em) {
+  ::v-deep .project-others__container {
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  }
+
+  ::v-deep .project-featured__container {
+    .ul--grid {
+      grid-template-columns: minmax(9em, auto) minmax(9em, auto);
+    }
+  }
+}
+
 </style>

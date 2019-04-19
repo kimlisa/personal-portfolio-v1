@@ -46,6 +46,10 @@
 
     ::v-deep li {
       margin: 0 1.4em 0 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     ::v-deep li::before {

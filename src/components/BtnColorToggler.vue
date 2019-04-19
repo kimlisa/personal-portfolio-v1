@@ -132,7 +132,11 @@ $spacing-toggle-icon: 0.28em;
 .btn--3D {
   width: 3.2em;
   height: 1.49em;
-  font-size: 1.7em;
+  font-size: 1.4em;
+
+  @media screen and (max-width: 59.875em) {
+    font-size: 1.7em;
+  }
 
   &::after {
     top: 0;
