@@ -37,6 +37,10 @@ const router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/Contact.vue'),
     },
+    {
+      path: '*',
+      component: () => import(/* webpackChunkName: "404" */ './views/ErrorPageNotFound.vue'),
+    },
   ],
 });
 
