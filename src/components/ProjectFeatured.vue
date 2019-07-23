@@ -7,10 +7,42 @@
       <div class="project-featured__container__left">
         <p class="p--first">
           A web app still in development that stores and filters data about Humpback Whales.
-          Public users can search through the database using advanced filter settings. Users with
-          accounts can upload/delete files and control privacy settings on files.
+          One of core contributor and member since inception of application.
           <a href="https://hwsc-org.github.io/" target="_blank">Learn More</a>
         </p>
+        <h6>Made contributions to the following repositories:</h6>
+        <ul>
+          <li>
+            <a
+              href="https://github.com/hwsc-org/hwsc-user-svc/commits?author=kimlisa"
+              target="_blank"
+            >hwsc-user-svc</a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/hwsc-org/hwsc-api-blocks/commits?author=kimlisa"
+              target="_blank"
+            >hwsc-api-blocks</a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/hwsc-org/hwsc-dev-ops/commits?author=kimlisa"
+              target="_blank"
+            >hwsc-dev-ops</a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/hwsc-org/hwsc-frontend/commits?author=kimlisa"
+              target="_blank"
+            >hwsc-frontend</a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/hwsc-org/hwsc-org.github.io/commits?author=kimlisa"
+              target="_blank"
+            >hwsc-wiki</a>
+          </li>
+        </ul>
         <h6>Some Tools Used:</h6>
         <ul class="ul--grid">
           <li>Vue.js</li>
@@ -18,7 +50,7 @@
           <li>Golang</li>
           <li>gRPC</li>
           <li>PostgresSQL</li>
-          <li>Microservice</li>
+          <li>Envoy Proxy</li>
           <li>Docker</li>
           <li>Azure Services</li>
           <li>...and more</li>

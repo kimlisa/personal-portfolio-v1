@@ -15,7 +15,7 @@
         <template v-slot:description>
           Designed and developed as a single page application.
           Used as a playground for researching, applying, practicing
-          frontend tools and advanced CSS concepts.
+          frontend tools and advanced CSS concepts. Uses minimal libraries.
         </template>
         <template v-slot:tools>
           <li>Vue.js</li>
