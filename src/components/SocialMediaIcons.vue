@@ -24,7 +24,7 @@
       <font-awesome-icon :icon="['fab', 'linkedin-in']" />
     </a>
     <a
-      href="./kimlisa_resume2019.pdf"
+      href="./kimlisa_resume_2019.pdf"
       title="Resume"
       target="_blank"
       class="social-media-icons__resume"

@@ -33,7 +33,7 @@
         </ul>
       </div>
     </div>
-    <a class="btn--big a--btn" href="./kimlisa_resume2019.pdf" target="_blank">
+    <a class="btn--big a--btn" href="./kimlisa_resume_2019.pdf" target="_blank">
       View My Resume
     </a>
   </section>

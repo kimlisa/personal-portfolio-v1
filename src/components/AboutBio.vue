@@ -19,7 +19,7 @@
         </p>
       </div>
       <div class="about-bio__container__right">
-        <img src="../assets/me3.jpg">
+        <img src="../assets/me4.jpg">
       </div>
     </div>
   </section>
