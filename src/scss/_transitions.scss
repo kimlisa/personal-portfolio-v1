@@ -35,13 +35,13 @@
 }
 
 .fade-in-top-enter {
-  transform: translateY(-100%);
   opacity: 0;
+  transform: translateY(-100%);
 }
 
 .fade-in-bottom-enter {
-  transform: translateY(100%);
   opacity: 0;
+  transform: translateY(100%);
 }
 
 .fade-in-bottom-leave-to,

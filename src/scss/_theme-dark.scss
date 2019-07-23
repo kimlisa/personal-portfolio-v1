@@ -4,9 +4,9 @@
   color: #ccc;
 
   button[disabled=disabled][type=button] {
-    border: 1px solid #3c3c3c;
-    background-color: #2a2a2a;
     color: #484848;
+    background-color: #2a2a2a;
+    border: 1px solid #3c3c3c;
   }
 
   a {

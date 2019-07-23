@@ -1,6 +1,7 @@
 # personal-portfolio-v1
 
-## to be deployed
+## View project
+https://kimlisa.me
 
 ## Purpose:
 - Research and test out ts/es and scss linting
@@ -82,7 +83,7 @@ $ vue add @vue/cli-plugin-eslint
  }
  ``` 
   
- ######notes:
+ ###### notes:
  - styelint-scss: additional linting for scss specifically
  - stylelint-config-standard: extends general css linting
  - stylelint-config-recess-order: upon `--fix` auto reorders CSS property following RECESS rule

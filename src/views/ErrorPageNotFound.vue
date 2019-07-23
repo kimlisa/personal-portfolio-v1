@@ -28,18 +28,18 @@ export default class ErrorPageNotFound extends Vue {}
 }
 
 .error-404__number {
-  font-weight: 600;
-  font-size: 9em;
   margin-top: 0;
   margin-bottom: 0.3em;
+  font-size: 9em;
+  font-weight: 600;
   line-height: 1em;
 }
 
 .error-404__text {
-  width: 100%;
   display: block;
-  font-size: 2em;
+  width: 100%;
   margin-top: 0;
+  font-size: 2em;
   line-height: 1em;
 }
 </style>
