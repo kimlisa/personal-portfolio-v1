@@ -10,7 +10,7 @@
           One of core contributor and member since inception of application.
           <a href="https://hwsc-org.github.io/" target="_blank">Learn More</a>
         </p>
-        <h6>Made contributions to the following repositories:</h6>
+        <h6>Contributed to the following repo:</h6>
         <ul>
           <li>
             <a
