@@ -9,6 +9,25 @@
     border: 1px solid #3c3c3c;
   }
 
+  .tabs__btn {
+    font-weight: bold;
+    color: #9f9f9f;
+
+    &:focus {
+      border-bottom: 2px solid #fff;
+      outline: 0;
+    }
+  }
+
+  .tabs__btn--active {
+    color: #fff;
+    border-bottom: 2px solid #fff;
+  }
+
+  .tab--ul {
+    font-weight: normal;
+  }
+
   a {
     color: #00b77f;
   }
@@ -45,14 +64,14 @@
   }
 
   .project-card {
-    background-color: rgba(34, 34, 34, 0.9);
+    background-color: #252525;
 
     li {
       color: #43b99c;
     }
 
     h5 {
-      color: #585858;
+      color: #606060;
     }
   }
 

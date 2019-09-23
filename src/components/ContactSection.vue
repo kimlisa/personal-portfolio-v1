@@ -4,8 +4,11 @@
     <div class="contact-section__container">
       <div class="contact-section__container__left">
         <p class="contact-section__container__left__text p--first">
-          Whether you have a question or just want to say hi, I will try my best
-          to get back to you.
+          Whether you have a question or want to say hi (or test out my
+          <a
+            href="https://github.com/dwyl/learn-to-send-email-via-google-script-html-no-server"
+            target="_blank">contact form
+          </a> actually works 😛), I will try my best to get back to you.
         </p>
         <div class="contact-section__container__left__resources">
           <p>

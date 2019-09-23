@@ -2,63 +2,16 @@
   <section class="project-featured">
     <h3>featured project</h3>
     <h4>Humpback Whale Social Call</h4>
-    <h5>Full Stack Developer, Frontend Lead</h5>
+    <h5>Full Stack Dev (Jan 2018 ~ Jun 2019)</h5>
     <div class="project-featured__container">
       <div class="project-featured__container__left">
         <p class="p--first">
-          A web app still in development that stores and filters data about Humpback Whales.
+          A web application (still in development) that biologists can use to consolidate
+          and to track data about humpback whales and other marine mammals.
           One of core contributor and member since inception of application.
-          <a href="https://hwsc-org.github.io/" target="_blank">Learn More</a>
+          Image is of a prototype.
         </p>
-        <h6>Contributed to the following repo:</h6>
-        <ul>
-          <li>
-            <a
-              href="https://github.com/hwsc-org/hwsc-user-svc/commits?author=kimlisa"
-              target="_blank"
-            >hwsc-user-svc</a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/hwsc-org/hwsc-api-blocks/commits?author=kimlisa"
-              target="_blank"
-            >hwsc-api-blocks</a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/hwsc-org/hwsc-dev-ops/commits?author=kimlisa"
-              target="_blank"
-            >hwsc-dev-ops</a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/hwsc-org/hwsc-frontend/commits?author=kimlisa"
-              target="_blank"
-            >hwsc-frontend</a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/hwsc-org/hwsc-org.github.io/commits?author=kimlisa"
-              target="_blank"
-            >hwsc-wiki</a>
-          </li>
-        </ul>
-        <h6>Some Tools Used:</h6>
-        <ul class="ul--grid">
-          <li>Vue.js</li>
-          <li>TypeScript</li>
-          <li>Golang</li>
-          <li>gRPC</li>
-          <li>PostgresSQL</li>
-          <li>Envoy Proxy</li>
-          <li>Docker</li>
-          <li>Azure Services</li>
-          <li>...and more</li>
-        </ul>
-        <ProjectLinks
-          gitHub="https://github.com/hwsc-org"
-          demo="https://hwsc-org.github.io/"
-        />
+        <Tabs/>
       </div>
       <div class="project-featured__container__right">
         <img src="../assets/hwsc.svg">
@@ -69,16 +22,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import ProjectLinks from '@/components/ProjectLinks.vue';
+import Tabs from '@/components/Tabs.vue';
 
 @Component({
   components: {
-    ProjectLinks,
+    Tabs,
   },
 })
-export default class ProjectFeatured extends Vue {
-
-}
+export default class ProjectFeatured extends Vue {}
 </script>
 
 <style lang="scss" scoped>
@@ -103,28 +54,10 @@ export default class ProjectFeatured extends Vue {
         box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
       }
     }
+  }
 
-    .ul--grid {
-      grid-template-columns: minmax(5.1em, auto) minmax(9em, auto) minmax(1em, auto);
-      margin-bottom: 3em;
-      font-size: 0.8em;
-
-      @include font-tertiary;
-    }
-
-    li {
-      margin-bottom: 0.4em;
-    }
-
-    li::before {
-      @media screen and (max-width: 25em) {
-        margin-right: 0.1em;
-      }
-    }
-
-    ::v-deep .project-links {
-      margin-left: -0.36em;
-    }
+  .p--first {
+    margin-bottom: 2.5em;
   }
 }
 

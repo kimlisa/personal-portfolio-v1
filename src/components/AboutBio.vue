@@ -8,14 +8,13 @@
           <a href="https://www.uwb.edu/" target="_blank">University of Washington Bothell</a>.
         </p>
         <p>
-          I am a software engineer and my niche is in frontend development. I enjoy developing
-          websites and web apps that are intuitive, responsive and efficient. I appreciate clean
-          designs and love making designs come to fruition.
+          I am a Junior Software Engineer. I enjoy developing apps that are intuitive, responsive
+          and efficient. I appreciate clean designs and love making designs come to fruition.
         </p>
         <p>
           I strive to be minimalistic and simple. And I apply this to my life, my code,
           and my design. My coding motto is KISS, DRY, modularization, and consistency.
-          I am constantly learning to sharpen my skills and learn new technologies.
+          I am constantly learning and applying to sharpen my skills and learn new technologies.
         </p>
       </div>
       <div class="about-bio__container__right">

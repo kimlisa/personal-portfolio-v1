@@ -1,30 +1,22 @@
 <template functional>
   <section class="about-fact" :key="aboutFact">
-    <h3>interesting fact</h3>
+    <h3>spare time</h3>
     <div class="about-fact__container">
       <div class="about-fact__container__left">
         <p class="p--first">
-          I hate waking up early, but I am up between 4 - 5AM anyways. The last thing I want to do
-          is go to the gym right after I wake up, but that is how I start my day.
+          In my spare time, I like to contribute to projects with meaningful purpose.
+          Currently, I am contributing to <a href="https://github.com/bio-pdv" target="_blank">Bio Population Dynamics Viewer</a>
+          (bio-pdv). It is a web application currently in its early development that provides
+          biologists a tool to upload and analyze mutational differences between reference
+          DNA sequences and samples.
         </p>
         <p>
-          I got inspired by
-          <a href="https://davidgoggins.com/about/" target="_blank">David Goggins</a>,
-          a retired Navy Seal. Through him I got a glimpse of what extreme
-          self-discipline and self-integrity looked like.
-        </p>
-        <p>
-          I also learned about
-          <a
-            href="https://www.thebalancecareers.com/seal-training-hell-week-3356097"
-            target="_blank"
-          >BUD/S Hell Week</a>.
-          I told myself if people can voluntarily put themselves through that, and survive it...
-          I can survive waking up early to go to the gym.
+          When I am not coding, I like to bake, watch Kdrama, paint,
+          or play League of Legends with friends.
         </p>
       </div>
       <div class="about-fact__container__right">
-        <img src="../assets/quote.jpeg">
+        <font-awesome-icon :icon="['fas', 'coffee']" />
       </div>
     </div>
   </section>
@@ -48,12 +40,12 @@
     }
 
     &__right {
-      flex-basis: 18em;
-      margin-right: $margin-flex-spacing;
-
-      img {
-        width: 100%;
-      }
+      flex-basis: 2em;
+      align-self: center;
+      margin: 0 auto;
+      font-size: 11em;
+      color: #5e5e5e;
+      text-align: left;
     }
   }
 }

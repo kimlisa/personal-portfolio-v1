@@ -11,10 +11,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import {
+  Component, Prop, Vue, Watch,
+} from 'vue-property-decorator';
 
 @Component
-export default class Menu extends Vue {
+export default class SubPageCover extends Vue {
   // props
   @Prop(String) readonly title!: string;
 

@@ -17,7 +17,7 @@
         <ul>
           <li>Node.js</li>
           <li>Golang</li>
-          <li>gRPC</li>
+          <li>Protobuf / gRPC</li>
           <li>PostgresSQL</li>
           <li>MongoDB</li>
         </ul>
@@ -29,7 +29,7 @@
           <li>Docker</li>
           <li>SPA</li>
           <li>Microservice</li>
-          <li>REST Api</li>
+          <li>REST API</li>
         </ul>
       </div>
     </div>
